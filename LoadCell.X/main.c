@@ -3,6 +3,8 @@
 #include "lcd_lib.h"
 #include <stdio.h>
 
+char str[16];
+
 void main(void)
 {    
     SYSTEM_Initialize();
@@ -15,9 +17,9 @@ void main(void)
     ANSELA = 0x00;
     ANSELB = 0x00;
     
-    //RA0 cell clock is output
+    //RA1 cell clock is output
     //RA3 cell data is input
-    TRISA = 0x04;
+    TRISA = 0x08;
     //init LATA
     LATA = 0x00;
     LATB = 0x00;
@@ -33,22 +35,36 @@ void main(void)
     lcd_backlight();
     lcd_set_cursor(0, 0);
     
-    lcd_print("HIZ");   
     
+    lcd_print("Initialize");   
+   
     __delay_ms(1000);
     
-    lcd_set_cursor(3, 0);
-    lcd_print("12:00");
-    
     weight_zero = get_scale_val(50);
-
-    char str[16];
+    
+    lcd_clear();
+    lcd_set_cursor(0, 0);
+    lcd_print("load cell set up");
+    lcd_set_cursor(0, 1);
+    float weight_gram = scale_convert_gram(weight_dat);
+        
+    sprintf(str, "%lu g", weight_gram);
+        
+    lcd_print(str);
+    
+    __delay_ms(3000);
+    
     while (1)
     {
         weight_dat = get_scale_val(8);
         float weight_gram = scale_convert_gram(weight_dat);
         
-        sprintf(str, "%d g", weight_gram);
+        sprintf(str, "%lu g", weight_gram);
+        
+        lcd_clear();
+        lcd_set_cursor(0, 0);
         lcd_print(str);
+        
+        __delay_ms(100);
     }
 }

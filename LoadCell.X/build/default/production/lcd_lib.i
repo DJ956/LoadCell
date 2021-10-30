@@ -4351,7 +4351,7 @@ uint8_t _backlightval;
 
 void lcd_cmd(uint8_t cmd){
 i2c_start();
-i2c_write(0x3F << 1);
+i2c_write(0x27 << 1);
 i2c_write(cmd);
 i2c_stop();
 _delay((unsigned long)((10)*(8000000/4000000.0)));

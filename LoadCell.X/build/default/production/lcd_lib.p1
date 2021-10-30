@@ -2838,9 +2838,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;lcd_lib.c: 12: i2c_start();
 "12
 [e ( _i2c_start ..  ]
-[; ;lcd_lib.c: 13: i2c_write(0x3F << 1);
+[; ;lcd_lib.c: 13: i2c_write(0x27 << 1);
 "13
-[e ( _i2c_write (1 -> << -> 63 `i -> 1 `i `uc ]
+[e ( _i2c_write (1 -> << -> 39 `i -> 1 `i `uc ]
 [; ;lcd_lib.c: 14: i2c_write(cmd);
 "14
 [e ( _i2c_write (1 _cmd ]

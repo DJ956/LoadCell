@@ -2796,13 +2796,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 289: typedef int16_t intptr_t;
 [; ;stdint.h: 294: typedef uint16_t uintptr_t;
 "9 loadcell.h
-[v _weight_dat `l ~T0 @X0 1 e ]
-[; ;loadcell.h: 9: signed long weight_dat;
+[v _weight_dat `um ~T0 @X0 1 e ]
+[; ;loadcell.h: 9: unsigned short long weight_dat;
 "10
-[v _weight_zero `l ~T0 @X0 1 e ]
-[; ;loadcell.h: 10: signed long weight_zero;
-[; ;loadcell.h: 17: long get_scale_val(uint8_t n);
-[; ;loadcell.h: 24: float scale_convert_gram(signed long count);
+[v _weight_zero `um ~T0 @X0 1 e ]
+[; ;loadcell.h: 10: unsigned short long weight_zero;
+[; ;loadcell.h: 17: unsigned short long get_scale_val(uint8_t n);
+[; ;loadcell.h: 24: float scale_convert_gram(unsigned short long count);
 [; ;pin_manager.h: 78: void PIN_MANAGER_Initialize (void);
 [; ;pin_manager.h: 90: void PIN_MANAGER_IOC(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
@@ -2821,19 +2821,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 "7 loadcell.c
 [v _set_CELL_CLK_LOW `(v ~T0 @X0 1 ef ]
 {
-[; ;loadcell.c: 7: void set_CELL_CLK_LOW(){ LATA &= ~ 0x01;}
+[; ;loadcell.c: 7: void set_CELL_CLK_LOW(){ LATA &= ~ 0x02;}
 [e :U _set_CELL_CLK_LOW ]
 [f ]
-[e =& _LATA -> ~ -> 1 `i `uc ]
+[e =& _LATA -> ~ -> 2 `i `uc ]
 [e :UE 349 ]
 }
 "12
 [v _set_CELL_CLK_HIGH `(v ~T0 @X0 1 ef ]
 {
-[; ;loadcell.c: 12: void set_CELL_CLK_HIGH(){ LATA |= 0x01;}
+[; ;loadcell.c: 12: void set_CELL_CLK_HIGH(){ LATA |= 0x02;}
 [e :U _set_CELL_CLK_HIGH ]
 [f ]
-[e =| _LATA -> -> 1 `i `uc ]
+[e =| _LATA -> -> 2 `i `uc ]
 [e :UE 350 ]
 }
 "15
@@ -2842,65 +2842,65 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;loadcell.c: 15: uint8_t get_CELL_DAT_VAL(){
 [e :U _get_CELL_DAT_VAL ]
 [f ]
-[; ;loadcell.c: 16: if(0x04 == 0x01){ return PORTAbits.RA0; }
+[; ;loadcell.c: 16: if(0x08 == 0x01){ return PORTAbits.RA0; }
 "16
-[e $ ! == -> 4 `i -> 1 `i 352  ]
+[e $ ! == -> 8 `i -> 1 `i 352  ]
 {
 [e ) . . _PORTAbits 0 0 ]
 [e $UE 351  ]
 }
 [e :U 352 ]
-[; ;loadcell.c: 17: if(0x04 == 0x02){ return PORTAbits.RA1; }
+[; ;loadcell.c: 17: if(0x08 == 0x02){ return PORTAbits.RA1; }
 "17
-[e $ ! == -> 4 `i -> 2 `i 353  ]
+[e $ ! == -> 8 `i -> 2 `i 353  ]
 {
 [e ) . . _PORTAbits 0 1 ]
 [e $UE 351  ]
 }
 [e :U 353 ]
-[; ;loadcell.c: 18: if(0x04 == 0x04){ return PORTAbits.RA2; }
+[; ;loadcell.c: 18: if(0x08 == 0x04){ return PORTAbits.RA2; }
 "18
-[e $ ! == -> 4 `i -> 4 `i 354  ]
+[e $ ! == -> 8 `i -> 4 `i 354  ]
 {
 [e ) . . _PORTAbits 0 2 ]
 [e $UE 351  ]
 }
 [e :U 354 ]
-[; ;loadcell.c: 19: if(0x04 == 0x08){ return PORTAbits.RA3; }
+[; ;loadcell.c: 19: if(0x08 == 0x08){ return PORTAbits.RA3; }
 "19
-[e $ ! == -> 4 `i -> 8 `i 355  ]
+[e $ ! == -> 8 `i -> 8 `i 355  ]
 {
 [e ) . . _PORTAbits 0 3 ]
 [e $UE 351  ]
 }
 [e :U 355 ]
-[; ;loadcell.c: 20: if(0x04 == 0x10){ return PORTAbits.RA4; }
+[; ;loadcell.c: 20: if(0x08 == 0x10){ return PORTAbits.RA4; }
 "20
-[e $ ! == -> 4 `i -> 16 `i 356  ]
+[e $ ! == -> 8 `i -> 16 `i 356  ]
 {
 [e ) . . _PORTAbits 0 4 ]
 [e $UE 351  ]
 }
 [e :U 356 ]
-[; ;loadcell.c: 21: if(0x04 == 0x20){ return PORTAbits.RA5; }
+[; ;loadcell.c: 21: if(0x08 == 0x20){ return PORTAbits.RA5; }
 "21
-[e $ ! == -> 4 `i -> 32 `i 357  ]
+[e $ ! == -> 8 `i -> 32 `i 357  ]
 {
 [e ) . . _PORTAbits 0 5 ]
 [e $UE 351  ]
 }
 [e :U 357 ]
-[; ;loadcell.c: 22: if(0x04 == 0x40){ return PORTAbits.RA6; }
+[; ;loadcell.c: 22: if(0x08 == 0x40){ return PORTAbits.RA6; }
 "22
-[e $ ! == -> 4 `i -> 64 `i 358  ]
+[e $ ! == -> 8 `i -> 64 `i 358  ]
 {
 [e ) . . _PORTAbits 0 6 ]
 [e $UE 351  ]
 }
 [e :U 358 ]
-[; ;loadcell.c: 23: if(0x04 == 0x80){ return PORTAbits.RA7; }
+[; ;loadcell.c: 23: if(0x08 == 0x80){ return PORTAbits.RA7; }
 "23
-[e $ ! == -> 4 `i -> 128 `i 359  ]
+[e $ ! == -> 8 `i -> 128 `i 359  ]
 {
 [e ) . . _PORTAbits 0 7 ]
 [e $UE 351  ]
@@ -2915,10 +2915,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 351 ]
 }
 "28
-[v _get_scale_val `(l ~T0 @X0 1 ef1`uc ]
+[v _get_scale_val `(um ~T0 @X0 1 ef1`uc ]
 "29
 {
-[; ;loadcell.c: 28: long get_scale_val(uint8_t n)
+[; ;loadcell.c: 28: unsigned short long get_scale_val(uint8_t n)
 [; ;loadcell.c: 29: {
 [e :U _get_scale_val ]
 "28
@@ -2929,13 +2929,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 "30
 [e ( _set_CELL_CLK_LOW ..  ]
 "32
-[v _weight_count `l ~T0 @X0 1 a ]
-[; ;loadcell.c: 32: long weight_count = 0;
-[e = _weight_count -> -> 0 `i `l ]
+[v _weight_count `um ~T0 @X0 1 a ]
+[; ;loadcell.c: 32: unsigned short long weight_count = 0;
+[e = _weight_count -> -> -> 0 `i `m `um ]
 "33
-[v _weight_add `l ~T0 @X0 1 a ]
-[; ;loadcell.c: 33: long weight_add = 0;
-[e = _weight_add -> -> 0 `i `l ]
+[v _weight_add `um ~T0 @X0 1 a ]
+[; ;loadcell.c: 33: unsigned short long weight_add = 0;
+[e = _weight_add -> -> -> 0 `i `m `um ]
 [; ;loadcell.c: 34: for (uint8_t j = 0; j < n; j++)
 "34
 {
@@ -2946,146 +2946,137 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 361 ]
 [; ;loadcell.c: 35: {
 {
-[; ;loadcell.c: 36: while (get_CELL_DAT_VAL() == 0)
+[; ;loadcell.c: 36: while (get_CELL_DAT_VAL() == 0);
 "36
 [e $U 365  ]
 [e :U 366 ]
-[; ;loadcell.c: 37: ;
-"37
 [e :U 365 ]
-"36
 [e $ == -> ( _get_CELL_DAT_VAL ..  `i -> 0 `i 366  ]
 [e :U 367 ]
-[; ;loadcell.c: 38: while (get_CELL_DAT_VAL() == 1)
-"38
+[; ;loadcell.c: 37: while (get_CELL_DAT_VAL() == 1);
+"37
 [e $U 368  ]
 [e :U 369 ]
-[; ;loadcell.c: 39: ;
-"39
 [e :U 368 ]
-"38
 [e $ == -> ( _get_CELL_DAT_VAL ..  `i -> 1 `i 369  ]
 [e :U 370 ]
-[; ;loadcell.c: 40: _delay((unsigned long)((10)*(8000000/4000000.0)));
-"40
+[; ;loadcell.c: 38: _delay((unsigned long)((10)*(8000000/4000000.0)));
+"38
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"42
+"40
 [v _i `uc ~T0 @X0 1 a ]
-[; ;loadcell.c: 42: uint8_t i;
-[; ;loadcell.c: 43: for (i = 0; i < 24; i++){
-"43
+[; ;loadcell.c: 40: uint8_t i;
+[; ;loadcell.c: 41: for (i = 0; i < 24; i++){
+"41
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 24 `i 371  ]
 [e $U 372  ]
 [e :U 371 ]
 {
-[; ;loadcell.c: 44: weight_count <<= 1;
-"44
+[; ;loadcell.c: 42: weight_count <<= 1;
+"42
 [e =<< _weight_count -> 1 `i ]
-[; ;loadcell.c: 45: set_CELL_CLK_HIGH();
-"45
-[e ( _set_CELL_CLK_HIGH ..  ]
-[; ;loadcell.c: 46: _delay((unsigned long)((10)*(8000000/4000000.0)));
-"46
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;loadcell.c: 47: set_CELL_CLK_LOW();
-"47
-[e ( _set_CELL_CLK_LOW ..  ]
-[; ;loadcell.c: 48: weight_count += get_CELL_DAT_VAL();
-"48
-[e =+ _weight_count -> ( _get_CELL_DAT_VAL ..  `l ]
-[; ;loadcell.c: 49: _delay((unsigned long)((10)*(8000000/4000000.0)));
-"49
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"50
-}
+[; ;loadcell.c: 43: set_CELL_CLK_HIGH();
 "43
+[e ( _set_CELL_CLK_HIGH ..  ]
+[; ;loadcell.c: 44: _delay((unsigned long)((10)*(8000000/4000000.0)));
+"44
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;loadcell.c: 45: set_CELL_CLK_LOW();
+"45
+[e ( _set_CELL_CLK_LOW ..  ]
+[; ;loadcell.c: 46: weight_count += get_CELL_DAT_VAL();
+"46
+[e =+ _weight_count -> ( _get_CELL_DAT_VAL ..  `um ]
+[; ;loadcell.c: 47: _delay((unsigned long)((10)*(8000000/4000000.0)));
+"47
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+"48
+}
+"41
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 24 `i 371  ]
 [e :U 372 ]
-"50
+"48
 }
-[; ;loadcell.c: 50: }
-[; ;loadcell.c: 52: for (i = 0; i < 1; i++){
-"52
+[; ;loadcell.c: 48: }
+[; ;loadcell.c: 50: for (i = 0; i < 1; i++){
+"50
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 1 `i 374  ]
 [e $U 375  ]
 [e :U 374 ]
 {
-[; ;loadcell.c: 53: set_CELL_CLK_HIGH();
-"53
+[; ;loadcell.c: 51: set_CELL_CLK_HIGH();
+"51
 [e ( _set_CELL_CLK_HIGH ..  ]
+[; ;loadcell.c: 52: _delay((unsigned long)((10)*(8000000/4000000.0)));
+"52
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;loadcell.c: 53: set_CELL_CLK_LOW();
+"53
+[e ( _set_CELL_CLK_LOW ..  ]
 [; ;loadcell.c: 54: _delay((unsigned long)((10)*(8000000/4000000.0)));
 "54
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;loadcell.c: 55: set_CELL_CLK_LOW();
 "55
-[e ( _set_CELL_CLK_LOW ..  ]
-[; ;loadcell.c: 56: _delay((unsigned long)((10)*(8000000/4000000.0)));
-"56
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"57
 }
-"52
+"50
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 1 `i 374  ]
 [e :U 375 ]
-"57
+"55
 }
-[; ;loadcell.c: 57: }
-[; ;loadcell.c: 59: weight_add += weight_count;
-"59
+[; ;loadcell.c: 55: }
+[; ;loadcell.c: 57: weight_add += weight_count;
+"57
 [e =+ _weight_add _weight_count ]
-[; ;loadcell.c: 60: weight_count = 0;
-"60
-[e = _weight_count -> -> 0 `i `l ]
-"61
+[; ;loadcell.c: 58: weight_count = 0;
+"58
+[e = _weight_count -> -> -> 0 `i `m `um ]
+"59
 }
 "34
 [e ++ _j -> -> 1 `i `uc ]
 [e :U 364 ]
 [e $ < -> _j `i -> _n `i 361  ]
 [e :U 362 ]
-"61
+"59
 }
-[; ;loadcell.c: 61: }
-[; ;loadcell.c: 62: weight_count = weight_add / n;
-"62
-[e = _weight_count / _weight_add -> _n `l ]
-[; ;loadcell.c: 63: return weight_count;
-"63
+[; ;loadcell.c: 59: }
+[; ;loadcell.c: 60: weight_count = weight_add / n;
+"60
+[e = _weight_count / _weight_add -> _n `um ]
+[; ;loadcell.c: 61: return weight_count;
+"61
 [e ) _weight_count ]
 [e $UE 360  ]
-[; ;loadcell.c: 64: }
-"64
+[; ;loadcell.c: 62: }
+"62
 [e :UE 360 ]
 }
-"66
-[v _scale_convert_gram `(f ~T0 @X0 1 ef1`l ]
-"67
+"64
+[v _scale_convert_gram `(f ~T0 @X0 1 ef1`um ]
+"65
 {
-[; ;loadcell.c: 66: float scale_convert_gram(signed long count)
-[; ;loadcell.c: 67: {
+[; ;loadcell.c: 64: float scale_convert_gram(unsigned short long count)
+[; ;loadcell.c: 65: {
 [e :U _scale_convert_gram ]
-"66
-[v _count `l ~T0 @X0 1 r1 ]
-"67
+"64
+[v _count `um ~T0 @X0 1 r1 ]
+"65
 [f ]
-"68
+"66
 [v _temp `f ~T0 @X0 1 a ]
-[; ;loadcell.c: 68: float temp = count - weight_zero;
+[; ;loadcell.c: 66: float temp = count - weight_zero;
 [e = _temp -> - _count _weight_zero `f ]
-[; ;loadcell.c: 69: temp = temp / 3035;
-"69
-[e = _temp / _temp -> -> 3035 `i `f ]
-[; ;loadcell.c: 70: return temp;
-"70
+[; ;loadcell.c: 68: return temp;
+"68
 [e ) _temp ]
 [e $UE 377  ]
-[; ;loadcell.c: 71: }
-"71
+[; ;loadcell.c: 69: }
+"69
 [e :UE 377 ]
 }

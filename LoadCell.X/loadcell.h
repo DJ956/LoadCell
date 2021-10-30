@@ -2,23 +2,23 @@
 #include <stdint.h>
 
 //RA1
-#define CELL_CLK 0x01
+#define CELL_CLK 0x02
 //RA3
-#define CELL_DAT 0x04
+#define CELL_DAT 0x08
 
-signed long weight_dat;
-signed long weight_zero;
+unsigned short long weight_dat;
+unsigned short long weight_zero;
 
 /**
  * get scale value
  * @param scale count
  * @return 
  */
-long get_scale_val(uint8_t n);
+unsigned short long get_scale_val(uint8_t n);
 
 /**
  * scale value to gram value
  * @param count
  * @return gram value
  */
-float scale_convert_gram(signed long count);
+float scale_convert_gram(unsigned short long count);

@@ -1,7 +1,7 @@
 #include <xc.h>
 #include <stdint.h>
 
-#define LCD_ADD 0x3F
+#define LCD_ADD 0x27
     
 #define En 0b00000100
 #define Rs 0b00000001

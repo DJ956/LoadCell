@@ -4329,14 +4329,14 @@ void OSCILLATOR_Initialize(void);
 void WDT_Initialize(void);
 
 # 9 "loadcell.h"
-signed long weight_dat;
-signed long weight_zero;
+unsigned short long weight_dat;
+unsigned short long weight_zero;
 
 # 17
-long get_scale_val(uint8_t n);
+unsigned short long get_scale_val(uint8_t n);
 
 # 24
-float scale_convert_gram(signed long count);
+float scale_convert_gram(unsigned short long count);
 
 # 9 "lcd_lib.h"
 void lcd_init();
@@ -4395,6 +4395,8 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 6 "main.c"
+char str[16];
+
 void main(void)
 {
 SYSTEM_Initialize();
@@ -4409,7 +4411,7 @@ ANSELB = 0x00;
 
 
 
-TRISA = 0x04;
+TRISA = 0x08;
 
 LATA = 0x00;
 LATB = 0x00;
@@ -4425,22 +4427,36 @@ lcd_init();
 lcd_backlight();
 lcd_set_cursor(0, 0);
 
-lcd_print("HIZ");
+
+lcd_print("Initialize");
 
 _delay((unsigned long)((1000)*(8000000/4000.0)));
 
-lcd_set_cursor(3, 0);
-lcd_print("12:00");
-
 weight_zero = get_scale_val(50);
 
-char str[16];
+lcd_clear();
+lcd_set_cursor(0, 0);
+lcd_print("load cell set up");
+lcd_set_cursor(0, 1);
+float weight_gram = scale_convert_gram(weight_dat);
+
+sprintf(str, "%lu g", weight_gram);
+
+lcd_print(str);
+
+_delay((unsigned long)((3000)*(8000000/4000.0)));
+
 while (1)
 {
 weight_dat = get_scale_val(8);
 float weight_gram = scale_convert_gram(weight_dat);
 
-sprintf(str, "%d g", weight_gram);
+sprintf(str, "%lu g", weight_gram);
+
+lcd_clear();
+lcd_set_cursor(0, 0);
 lcd_print(str);
+
+_delay((unsigned long)((100)*(8000000/4000.0)));
 }
 }

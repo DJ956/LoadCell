@@ -4294,14 +4294,14 @@ typedef int16_t intptr_t;
 typedef uint16_t uintptr_t;
 
 # 9 "loadcell.h"
-signed long weight_dat;
-signed long weight_zero;
+unsigned short long weight_dat;
+unsigned short long weight_zero;
 
 # 17
-long get_scale_val(uint8_t n);
+unsigned short long get_scale_val(uint8_t n);
 
 # 24
-float scale_convert_gram(signed long count);
+float scale_convert_gram(unsigned short long count);
 
 # 78 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
@@ -4339,37 +4339,35 @@ void OSCILLATOR_Initialize(void);
 void WDT_Initialize(void);
 
 # 7 "loadcell.c"
-void set_CELL_CLK_LOW(){ LATA &= ~ 0x01;}
+void set_CELL_CLK_LOW(){ LATA &= ~ 0x02;}
 
 # 12
-void set_CELL_CLK_HIGH(){ LATA |= 0x01;}
+void set_CELL_CLK_HIGH(){ LATA |= 0x02;}
 
 
 uint8_t get_CELL_DAT_VAL(){
-if(0x04 == 0x01){ return PORTAbits.RA0; }
-if(0x04 == 0x02){ return PORTAbits.RA1; }
-if(0x04 == 0x04){ return PORTAbits.RA2; }
-if(0x04 == 0x08){ return PORTAbits.RA3; }
-if(0x04 == 0x10){ return PORTAbits.RA4; }
-if(0x04 == 0x20){ return PORTAbits.RA5; }
-if(0x04 == 0x40){ return PORTAbits.RA6; }
-if(0x04 == 0x80){ return PORTAbits.RA7; }
+if(0x08 == 0x01){ return PORTAbits.RA0; }
+if(0x08 == 0x02){ return PORTAbits.RA1; }
+if(0x08 == 0x04){ return PORTAbits.RA2; }
+if(0x08 == 0x08){ return PORTAbits.RA3; }
+if(0x08 == 0x10){ return PORTAbits.RA4; }
+if(0x08 == 0x20){ return PORTAbits.RA5; }
+if(0x08 == 0x40){ return PORTAbits.RA6; }
+if(0x08 == 0x80){ return PORTAbits.RA7; }
 
 return 0;
 }
 
-long get_scale_val(uint8_t n)
+unsigned short long get_scale_val(uint8_t n)
 {
 set_CELL_CLK_LOW();
 
-long weight_count = 0;
-long weight_add = 0;
+unsigned short long weight_count = 0;
+unsigned short long weight_add = 0;
 for (uint8_t j = 0; j < n; j++)
 {
-while (get_CELL_DAT_VAL() == 0)
-;
-while (get_CELL_DAT_VAL() == 1)
-;
+while (get_CELL_DAT_VAL() == 0);
+while (get_CELL_DAT_VAL() == 1);
 _delay((unsigned long)((10)*(8000000/4000000.0)));
 
 uint8_t i;
@@ -4396,9 +4394,9 @@ weight_count = weight_add / n;
 return weight_count;
 }
 
-float scale_convert_gram(signed long count)
+float scale_convert_gram(unsigned short long count)
 {
 float temp = count - weight_zero;
-temp = temp / 3035;
+
 return temp;
 }
