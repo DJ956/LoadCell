@@ -1,5 +1,5 @@
 
-# 1 "loadcell.c"
+# 1 "i2c.c"
 
 # 18 "C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\xc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -4293,112 +4293,54 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 9 "loadcell.h"
-signed long weight_dat;
-signed long weight_zero;
+# 4 "i2c.h"
+void i2c_wait();
+void i2c_start();
+void i2c_stop();
+void i2c_repeated_start();
+void i2c_write(uint8_t data);
+uint8_t i2c_read(uint8_t ack);
 
-# 17
-long get_scale_val(uint8_t n);
-
-# 24
-float scale_convert_gram(signed long count);
-
-# 78 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-
-# 90
-void PIN_MANAGER_IOC(void);
-
-# 15 "C:\Program Files\Microchip\xc8\v2.32\pic\include\c90\stdbool.h"
-typedef unsigned char bool;
-
-# 29 "C:\Program Files\Microchip\xc8\v2.32\pic\include\c90\errno.h"
-extern int errno;
-
-# 12 "C:\Program Files\Microchip\xc8\v2.32\pic\include\c90\conio.h"
-extern void init_uart(void);
-
-extern char getch(void);
-extern char getche(void);
-extern void putch(char);
-extern void ungetch(char);
-
-extern __bit kbhit(void);
-
-# 23
-extern char * cgets(char *);
-extern void cputs(const char *);
-
-# 69 "./mcc_generated_files/mcc.h"
-void SYSTEM_Initialize(void);
-
-# 82
-void OSCILLATOR_Initialize(void);
-
-# 94
-void WDT_Initialize(void);
-
-# 7 "loadcell.c"
-void set_CELL_CLK_LOW(){ LATA &= ~ 0x01;}
-
-# 12
-void set_CELL_CLK_HIGH(){ LATA |= 0x01;}
-
-
-uint8_t get_CELL_DAT_VAL(){
-if(0x04 == 0x01){ return PORTAbits.RA0; }
-if(0x04 == 0x02){ return PORTAbits.RA1; }
-if(0x04 == 0x04){ return PORTAbits.RA2; }
-if(0x04 == 0x08){ return PORTAbits.RA3; }
-if(0x04 == 0x10){ return PORTAbits.RA4; }
-if(0x04 == 0x20){ return PORTAbits.RA5; }
-if(0x04 == 0x40){ return PORTAbits.RA6; }
-if(0x04 == 0x80){ return PORTAbits.RA7; }
-
-return 0;
+# 4 "i2c.c"
+void i2c_wait(){
+while((SSP2CON2 & 0x1F) || (SSP2STAT & 0x04));
 }
 
-long get_scale_val(uint8_t n)
-{
-set_CELL_CLK_LOW();
-
-long weight_count = 0;
-long weight_add = 0;
-for (uint8_t j = 0; j < n; j++)
-{
-while (get_CELL_DAT_VAL() == 0)
-;
-while (get_CELL_DAT_VAL() == 1)
-;
-_delay((unsigned long)((10)*(8000000/4000000.0)));
-
-uint8_t i;
-for (i = 0; i < 24; i++){
-weight_count <<= 1;
-set_CELL_CLK_HIGH();
-_delay((unsigned long)((10)*(8000000/4000000.0)));
-set_CELL_CLK_LOW();
-weight_count += get_CELL_DAT_VAL();
-_delay((unsigned long)((10)*(8000000/4000000.0)));
+void i2c_start(){
+i2c_wait();
+SSP2CON2bits.SEN = 1;
+while(SSP2CON2bits.SEN);
 }
 
-for (i = 0; i < 1; i++){
-set_CELL_CLK_HIGH();
-_delay((unsigned long)((10)*(8000000/4000000.0)));
-set_CELL_CLK_LOW();
-_delay((unsigned long)((10)*(8000000/4000000.0)));
+void i2c_stop(){
+SSP2CON2bits.PEN = 1;
+while(SSP2CON2bits.PEN);
 }
 
-weight_add += weight_count;
-weight_count = 0;
-}
-weight_count = weight_add / n;
-return weight_count;
+void i2c_repeated_start(){
+i2c_wait();
+SSP2CON2bits.RSEN = 1;
+while(SSP2CON2bits.RSEN);
 }
 
-float scale_convert_gram(signed long count)
-{
-float temp = count - weight_zero;
-temp = temp / 3035;
-return temp;
+void i2c_write(uint8_t data){
+SSP2BUF = data;
+while(SSP2STATbits.BF);
+while(SSP2CON2bits.ACKSTAT);
+i2c_wait();
 }
+
+uint8_t i2c_read(uint8_t ack){
+uint8_t data;
+
+SSP2CON2bits.ACKDT = ack;
+SSP2CON2bits.RCEN = 1;
+while(!SSP2STATbits.BF);
+SSP2CON2bits.ACKEN = 1;
+data = SSP2BUF;
+SSP2CON1bits.SSPOV = 0;
+i2c_wait();
+
+return data;
+}
+

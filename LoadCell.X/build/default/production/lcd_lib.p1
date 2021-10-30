@@ -1,18 +1,20 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"2039 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\proc\pic16f1827.h
-[v _LATA `Vuc ~T0 @X0 0 e@268 ]
-"435
-[s S29 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S29 . RA0 RA1 RA2 RA3 RA4 RA5 RA6 RA7 ]
-"434
-[u S28 `S29 1 ]
-[n S28 . . ]
-"446
-[v _PORTAbits `VS28 ~T0 @X0 0 e@12 ]
+"5 i2c.h
+[v _i2c_start `(v ~T0 @X0 0 ef ]
+"8
+[v _i2c_write `(v ~T0 @X0 0 ef1`uc ]
+"6
+[v _i2c_stop `(v ~T0 @X0 0 ef ]
 [v F2287 `(v ~T0 @X0 1 tf1`ul ]
 "92 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\pic.h
 [v __delay `JF2287 ~T0 @X0 0 e ]
 [p i __delay ]
+"13 lcd_lib.h
+[v _lcd_set_cursor `(v ~T0 @X0 0 ef2`uc`uc ]
+"14
+[v _lcd_print `(v ~T0 @X0 0 ef1`*uc ]
+"16
+[v _command `(v ~T0 @X0 0 ef2`uc`uc ]
 [; ;xc8\pic\include\xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc8\pic\include\xc.h: 20: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2767,6 +2769,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;xc8\pic\include\pic.h: 137: extern __bank0 unsigned char __resetbits;
 [; ;xc8\pic\include\pic.h: 138: extern __bank0 __bit __powerdown;
 [; ;xc8\pic\include\pic.h: 139: extern __bank0 __bit __timeout;
+[; ;pin_manager.h: 78: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 90: void PIN_MANAGER_IOC(void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef __int24 int24_t;
@@ -2795,16 +2799,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 282: typedef uint32_t uintmax_t;
 [; ;stdint.h: 289: typedef int16_t intptr_t;
 [; ;stdint.h: 294: typedef uint16_t uintptr_t;
-"9 loadcell.h
-[v _weight_dat `l ~T0 @X0 1 e ]
-[; ;loadcell.h: 9: signed long weight_dat;
-"10
-[v _weight_zero `l ~T0 @X0 1 e ]
-[; ;loadcell.h: 10: signed long weight_zero;
-[; ;loadcell.h: 17: long get_scale_val(uint8_t n);
-[; ;loadcell.h: 24: float scale_convert_gram(signed long count);
-[; ;pin_manager.h: 78: void PIN_MANAGER_Initialize (void);
-[; ;pin_manager.h: 90: void PIN_MANAGER_IOC(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;errno.h: 29: extern int errno;
 [; ;conio.h: 12: extern void init_uart(void);
@@ -2818,274 +2812,404 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.h: 69: void SYSTEM_Initialize(void);
 [; ;mcc.h: 82: void OSCILLATOR_Initialize(void);
 [; ;mcc.h: 94: void WDT_Initialize(void);
-"7 loadcell.c
-[v _set_CELL_CLK_LOW `(v ~T0 @X0 1 ef ]
+[; ;i2c.h: 4: void i2c_wait();
+[; ;i2c.h: 5: void i2c_start();
+[; ;i2c.h: 6: void i2c_stop();
+[; ;i2c.h: 7: void i2c_repeated_start();
+[; ;i2c.h: 8: void i2c_write(uint8_t data);
+[; ;i2c.h: 9: uint8_t i2c_read(uint8_t ack);
+[; ;lcd_lib.h: 9: void lcd_init();
+[; ;lcd_lib.h: 10: void lcd_backlight();
+[; ;lcd_lib.h: 11: void lcd_cmd(uint8_t cmd);
+[; ;lcd_lib.h: 12: void lcd_clear();
+[; ;lcd_lib.h: 13: void lcd_set_cursor(uint8_t col, uint8_t row);
+[; ;lcd_lib.h: 14: void lcd_print(char *str);
+[; ;lcd_lib.h: 16: void command(uint8_t val, uint8_t mode);
+"9 lcd_lib.c
+[v __backlightval `uc ~T0 @X0 1 e ]
+[; ;lcd_lib.c: 9: uint8_t _backlightval;
+"11
+[v _lcd_cmd `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;loadcell.c: 7: void set_CELL_CLK_LOW(){ LATA &= ~ 0x01;}
-[e :U _set_CELL_CLK_LOW ]
+[; ;lcd_lib.c: 11: void lcd_cmd(uint8_t cmd){
+[e :U _lcd_cmd ]
+[v _cmd `uc ~T0 @X0 1 r1 ]
 [f ]
-[e =& _LATA -> ~ -> 1 `i `uc ]
+[; ;lcd_lib.c: 12: i2c_start();
+"12
+[e ( _i2c_start ..  ]
+[; ;lcd_lib.c: 13: i2c_write(0x3F << 1);
+"13
+[e ( _i2c_write (1 -> << -> 63 `i -> 1 `i `uc ]
+[; ;lcd_lib.c: 14: i2c_write(cmd);
+"14
+[e ( _i2c_write (1 _cmd ]
+[; ;lcd_lib.c: 15: i2c_stop();
+"15
+[e ( _i2c_stop ..  ]
+[; ;lcd_lib.c: 16: _delay((unsigned long)((10)*(8000000/4000000.0)));
+"16
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 17: }
+"17
 [e :UE 349 ]
 }
-"12
-[v _set_CELL_CLK_HIGH `(v ~T0 @X0 1 ef ]
-{
-[; ;loadcell.c: 12: void set_CELL_CLK_HIGH(){ LATA |= 0x01;}
-[e :U _set_CELL_CLK_HIGH ]
-[f ]
-[e =| _LATA -> -> 1 `i `uc ]
-[e :UE 350 ]
-}
-"15
-[v _get_CELL_DAT_VAL `(uc ~T0 @X0 1 ef ]
-{
-[; ;loadcell.c: 15: uint8_t get_CELL_DAT_VAL(){
-[e :U _get_CELL_DAT_VAL ]
-[f ]
-[; ;loadcell.c: 16: if(0x04 == 0x01){ return PORTAbits.RA0; }
-"16
-[e $ ! == -> 4 `i -> 1 `i 352  ]
-{
-[e ) . . _PORTAbits 0 0 ]
-[e $UE 351  ]
-}
-[e :U 352 ]
-[; ;loadcell.c: 17: if(0x04 == 0x02){ return PORTAbits.RA1; }
-"17
-[e $ ! == -> 4 `i -> 2 `i 353  ]
-{
-[e ) . . _PORTAbits 0 1 ]
-[e $UE 351  ]
-}
-[e :U 353 ]
-[; ;loadcell.c: 18: if(0x04 == 0x04){ return PORTAbits.RA2; }
-"18
-[e $ ! == -> 4 `i -> 4 `i 354  ]
-{
-[e ) . . _PORTAbits 0 2 ]
-[e $UE 351  ]
-}
-[e :U 354 ]
-[; ;loadcell.c: 19: if(0x04 == 0x08){ return PORTAbits.RA3; }
 "19
-[e $ ! == -> 4 `i -> 8 `i 355  ]
+[v _lcd_init `(v ~T0 @X0 1 ef ]
 {
-[e ) . . _PORTAbits 0 3 ]
-[e $UE 351  ]
-}
-[e :U 355 ]
-[; ;loadcell.c: 20: if(0x04 == 0x10){ return PORTAbits.RA4; }
-"20
-[e $ ! == -> 4 `i -> 16 `i 356  ]
-{
-[e ) . . _PORTAbits 0 4 ]
-[e $UE 351  ]
-}
-[e :U 356 ]
-[; ;loadcell.c: 21: if(0x04 == 0x20){ return PORTAbits.RA5; }
-"21
-[e $ ! == -> 4 `i -> 32 `i 357  ]
-{
-[e ) . . _PORTAbits 0 5 ]
-[e $UE 351  ]
-}
-[e :U 357 ]
-[; ;loadcell.c: 22: if(0x04 == 0x40){ return PORTAbits.RA6; }
-"22
-[e $ ! == -> 4 `i -> 64 `i 358  ]
-{
-[e ) . . _PORTAbits 0 6 ]
-[e $UE 351  ]
-}
-[e :U 358 ]
-[; ;loadcell.c: 23: if(0x04 == 0x80){ return PORTAbits.RA7; }
-"23
-[e $ ! == -> 4 `i -> 128 `i 359  ]
-{
-[e ) . . _PORTAbits 0 7 ]
-[e $UE 351  ]
-}
-[e :U 359 ]
-[; ;loadcell.c: 25: return 0;
-"25
-[e ) -> -> 0 `i `uc ]
-[e $UE 351  ]
-[; ;loadcell.c: 26: }
-"26
-[e :UE 351 ]
-}
-"28
-[v _get_scale_val `(l ~T0 @X0 1 ef1`uc ]
-"29
-{
-[; ;loadcell.c: 28: long get_scale_val(uint8_t n)
-[; ;loadcell.c: 29: {
-[e :U _get_scale_val ]
-"28
-[v _n `uc ~T0 @X0 1 r1 ]
-"29
+[; ;lcd_lib.c: 19: void lcd_init(){
+[e :U _lcd_init ]
 [f ]
-[; ;loadcell.c: 30: set_CELL_CLK_LOW();
+[; ;lcd_lib.c: 20: _delay((unsigned long)((400)*(8000000/4000.0)));
+"20
+[e ( __delay (1 -> * -> -> 400 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;lcd_lib.c: 22: lcd_cmd(0x30);
+"22
+[e ( _lcd_cmd (1 -> -> 48 `i `uc ]
+[; ;lcd_lib.c: 23: lcd_cmd(0x34);
+"23
+[e ( _lcd_cmd (1 -> -> 52 `i `uc ]
+[; ;lcd_lib.c: 24: lcd_cmd(0x30);
+"24
+[e ( _lcd_cmd (1 -> -> 48 `i `uc ]
+[; ;lcd_lib.c: 25: _delay((unsigned long)((5)*(8000000/4000.0)));
+"25
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;lcd_lib.c: 27: lcd_cmd(0x30);
+"27
+[e ( _lcd_cmd (1 -> -> 48 `i `uc ]
+[; ;lcd_lib.c: 28: lcd_cmd(0x34);
+"28
+[e ( _lcd_cmd (1 -> -> 52 `i `uc ]
+[; ;lcd_lib.c: 29: lcd_cmd(0x30);
+"29
+[e ( _lcd_cmd (1 -> -> 48 `i `uc ]
+[; ;lcd_lib.c: 30: _delay((unsigned long)((5)*(8000000/4000.0)));
 "30
-[e ( _set_CELL_CLK_LOW ..  ]
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;lcd_lib.c: 32: lcd_cmd(0x30);
 "32
-[v _weight_count `l ~T0 @X0 1 a ]
-[; ;loadcell.c: 32: long weight_count = 0;
-[e = _weight_count -> -> 0 `i `l ]
+[e ( _lcd_cmd (1 -> -> 48 `i `uc ]
+[; ;lcd_lib.c: 33: lcd_cmd(0x34);
 "33
-[v _weight_add `l ~T0 @X0 1 a ]
-[; ;loadcell.c: 33: long weight_add = 0;
-[e = _weight_add -> -> 0 `i `l ]
-[; ;loadcell.c: 34: for (uint8_t j = 0; j < n; j++)
+[e ( _lcd_cmd (1 -> -> 52 `i `uc ]
+[; ;lcd_lib.c: 34: lcd_cmd(0x30);
 "34
-{
-[v _j `uc ~T0 @X0 1 a ]
-[e = _j -> -> 0 `i `uc ]
-[e $U 364  ]
+[e ( _lcd_cmd (1 -> -> 48 `i `uc ]
+[; ;lcd_lib.c: 35: _delay((unsigned long)((300)*(8000000/4000000.0)));
 "35
-[e :U 361 ]
-[; ;loadcell.c: 35: {
-{
-[; ;loadcell.c: 36: while (get_CELL_DAT_VAL() == 0)
-"36
-[e $U 365  ]
-[e :U 366 ]
-[; ;loadcell.c: 37: ;
+[e ( __delay (1 -> * -> -> 300 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 37: lcd_cmd(0x20);
 "37
-[e :U 365 ]
-"36
-[e $ == -> ( _get_CELL_DAT_VAL ..  `i -> 0 `i 366  ]
-[e :U 367 ]
-[; ;loadcell.c: 38: while (get_CELL_DAT_VAL() == 1)
+[e ( _lcd_cmd (1 -> -> 32 `i `uc ]
+[; ;lcd_lib.c: 38: lcd_cmd(0x24);
 "38
-[e $U 368  ]
-[e :U 369 ]
-[; ;loadcell.c: 39: ;
+[e ( _lcd_cmd (1 -> -> 36 `i `uc ]
+[; ;lcd_lib.c: 39: lcd_cmd(0x20);
 "39
-[e :U 368 ]
-"38
-[e $ == -> ( _get_CELL_DAT_VAL ..  `i -> 1 `i 369  ]
-[e :U 370 ]
-[; ;loadcell.c: 40: _delay((unsigned long)((10)*(8000000/4000000.0)));
+[e ( _lcd_cmd (1 -> -> 32 `i `uc ]
+[; ;lcd_lib.c: 40: _delay((unsigned long)((10)*(8000000/4000000.0)));
 "40
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"42
-[v _i `uc ~T0 @X0 1 a ]
-[; ;loadcell.c: 42: uint8_t i;
-[; ;loadcell.c: 43: for (i = 0; i < 24; i++){
+[; ;lcd_lib.c: 43: lcd_cmd(0x20);
 "43
-{
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 24 `i 371  ]
-[e $U 372  ]
-[e :U 371 ]
-{
-[; ;loadcell.c: 44: weight_count <<= 1;
+[e ( _lcd_cmd (1 -> -> 32 `i `uc ]
+[; ;lcd_lib.c: 44: lcd_cmd(0x24);
 "44
-[e =<< _weight_count -> 1 `i ]
-[; ;loadcell.c: 45: set_CELL_CLK_HIGH();
+[e ( _lcd_cmd (1 -> -> 36 `i `uc ]
+[; ;lcd_lib.c: 45: lcd_cmd(0x20);
 "45
-[e ( _set_CELL_CLK_HIGH ..  ]
-[; ;loadcell.c: 46: _delay((unsigned long)((10)*(8000000/4000000.0)));
-"46
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;loadcell.c: 47: set_CELL_CLK_LOW();
+[e ( _lcd_cmd (1 -> -> 32 `i `uc ]
+[; ;lcd_lib.c: 47: _delay((unsigned long)((100)*(8000000/4000000.0)));
 "47
-[e ( _set_CELL_CLK_LOW ..  ]
-[; ;loadcell.c: 48: weight_count += get_CELL_DAT_VAL();
-"48
-[e =+ _weight_count -> ( _get_CELL_DAT_VAL ..  `l ]
-[; ;loadcell.c: 49: _delay((unsigned long)((10)*(8000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 49: lcd_cmd(0x80);
 "49
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[e ( _lcd_cmd (1 -> -> 128 `i `uc ]
+[; ;lcd_lib.c: 50: lcd_cmd(0x84);
 "50
-}
-"43
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 24 `i 371  ]
-[e :U 372 ]
-"50
-}
-[; ;loadcell.c: 50: }
-[; ;loadcell.c: 52: for (i = 0; i < 1; i++){
-"52
-{
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 1 `i 374  ]
-[e $U 375  ]
-[e :U 374 ]
-{
-[; ;loadcell.c: 53: set_CELL_CLK_HIGH();
-"53
-[e ( _set_CELL_CLK_HIGH ..  ]
-[; ;loadcell.c: 54: _delay((unsigned long)((10)*(8000000/4000000.0)));
-"54
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;loadcell.c: 55: set_CELL_CLK_LOW();
+[e ( _lcd_cmd (1 -> -> 132 `i `uc ]
+[; ;lcd_lib.c: 51: lcd_cmd(0x80);
+"51
+[e ( _lcd_cmd (1 -> -> 128 `i `uc ]
+[; ;lcd_lib.c: 55: lcd_cmd(0x00);
 "55
-[e ( _set_CELL_CLK_LOW ..  ]
-[; ;loadcell.c: 56: _delay((unsigned long)((10)*(8000000/4000000.0)));
+[e ( _lcd_cmd (1 -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 56: lcd_cmd(0x04);
 "56
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[e ( _lcd_cmd (1 -> -> 4 `i `uc ]
+[; ;lcd_lib.c: 57: lcd_cmd(0x00);
 "57
-}
-"52
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 1 `i 374  ]
-[e :U 375 ]
-"57
-}
-[; ;loadcell.c: 57: }
-[; ;loadcell.c: 59: weight_add += weight_count;
+[e ( _lcd_cmd (1 -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 59: _delay((unsigned long)((100)*(8000000/4000000.0)));
 "59
-[e =+ _weight_add _weight_count ]
-[; ;loadcell.c: 60: weight_count = 0;
-"60
-[e = _weight_count -> -> 0 `i `l ]
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 61: lcd_cmd(0xC0);
 "61
-}
-"34
-[e ++ _j -> -> 1 `i `uc ]
-[e :U 364 ]
-[e $ < -> _j `i -> _n `i 361  ]
-[e :U 362 ]
-"61
-}
-[; ;loadcell.c: 61: }
-[; ;loadcell.c: 62: weight_count = weight_add / n;
+[e ( _lcd_cmd (1 -> -> 192 `i `uc ]
+[; ;lcd_lib.c: 62: lcd_cmd(0xC4);
 "62
-[e = _weight_count / _weight_add -> _n `l ]
-[; ;loadcell.c: 63: return weight_count;
+[e ( _lcd_cmd (1 -> -> 196 `i `uc ]
+[; ;lcd_lib.c: 63: lcd_cmd(0xC0);
 "63
-[e ) _weight_count ]
-[e $UE 360  ]
-[; ;loadcell.c: 64: }
-"64
-[e :UE 360 ]
-}
-"66
-[v _scale_convert_gram `(f ~T0 @X0 1 ef1`l ]
+[e ( _lcd_cmd (1 -> -> 192 `i `uc ]
+[; ;lcd_lib.c: 67: lcd_cmd(0x00);
 "67
-{
-[; ;loadcell.c: 66: float scale_convert_gram(signed long count)
-[; ;loadcell.c: 67: {
-[e :U _scale_convert_gram ]
-"66
-[v _count `l ~T0 @X0 1 r1 ]
-"67
-[f ]
+[e ( _lcd_cmd (1 -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 68: lcd_cmd(0x04);
 "68
-[v _temp `f ~T0 @X0 1 a ]
-[; ;loadcell.c: 68: float temp = count - weight_zero;
-[e = _temp -> - _count _weight_zero `f ]
-[; ;loadcell.c: 69: temp = temp / 3035;
+[e ( _lcd_cmd (1 -> -> 4 `i `uc ]
+[; ;lcd_lib.c: 69: lcd_cmd(0x00);
 "69
-[e = _temp / _temp -> -> 3035 `i `f ]
-[; ;loadcell.c: 70: return temp;
-"70
-[e ) _temp ]
-[e $UE 377  ]
-[; ;loadcell.c: 71: }
+[e ( _lcd_cmd (1 -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 71: _delay((unsigned long)((100)*(8000000/4000000.0)));
 "71
-[e :UE 377 ]
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 73: lcd_cmd(0x10);
+"73
+[e ( _lcd_cmd (1 -> -> 16 `i `uc ]
+[; ;lcd_lib.c: 74: lcd_cmd(0x14);
+"74
+[e ( _lcd_cmd (1 -> -> 20 `i `uc ]
+[; ;lcd_lib.c: 75: lcd_cmd(0x10);
+"75
+[e ( _lcd_cmd (1 -> -> 16 `i `uc ]
+[; ;lcd_lib.c: 77: _delay((unsigned long)((5)*(8000000/4000.0)));
+"77
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;lcd_lib.c: 80: lcd_cmd(0x00);
+"80
+[e ( _lcd_cmd (1 -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 81: lcd_cmd(0x04);
+"81
+[e ( _lcd_cmd (1 -> -> 4 `i `uc ]
+[; ;lcd_lib.c: 82: lcd_cmd(0x00);
+"82
+[e ( _lcd_cmd (1 -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 84: _delay((unsigned long)((100)*(8000000/4000000.0)));
+"84
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 86: lcd_cmd(0x60);
+"86
+[e ( _lcd_cmd (1 -> -> 96 `i `uc ]
+[; ;lcd_lib.c: 87: lcd_cmd(0x64);
+"87
+[e ( _lcd_cmd (1 -> -> 100 `i `uc ]
+[; ;lcd_lib.c: 88: lcd_cmd(0x60);
+"88
+[e ( _lcd_cmd (1 -> -> 96 `i `uc ]
+[; ;lcd_lib.c: 92: lcd_cmd(0x00);
+"92
+[e ( _lcd_cmd (1 -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 93: lcd_cmd(0x04);
+"93
+[e ( _lcd_cmd (1 -> -> 4 `i `uc ]
+[; ;lcd_lib.c: 94: lcd_cmd(0x00);
+"94
+[e ( _lcd_cmd (1 -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 96: _delay((unsigned long)((100)*(8000000/4000000.0)));
+"96
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 98: lcd_cmd(0x20);
+"98
+[e ( _lcd_cmd (1 -> -> 32 `i `uc ]
+[; ;lcd_lib.c: 99: lcd_cmd(0x24);
+"99
+[e ( _lcd_cmd (1 -> -> 36 `i `uc ]
+[; ;lcd_lib.c: 100: lcd_cmd(0x20);
+"100
+[e ( _lcd_cmd (1 -> -> 32 `i `uc ]
+[; ;lcd_lib.c: 102: _delay((unsigned long)((3)*(8000000/4000.0)));
+"102
+[e ( __delay (1 -> * -> -> 3 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;lcd_lib.c: 103: }
+"103
+[e :UE 350 ]
 }
+"105
+[v _lcd_backlight `(v ~T0 @X0 1 ef ]
+{
+[; ;lcd_lib.c: 105: void lcd_backlight(){
+[e :U _lcd_backlight ]
+[f ]
+[; ;lcd_lib.c: 106: lcd_cmd(0x08);
+"106
+[e ( _lcd_cmd (1 -> -> 8 `i `uc ]
+[; ;lcd_lib.c: 107: _backlightval = 0x08;
+"107
+[e = __backlightval -> -> 8 `i `uc ]
+[; ;lcd_lib.c: 108: _delay((unsigned long)((10)*(8000000/4000000.0)));
+"108
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 109: }
+"109
+[e :UE 351 ]
+}
+"111
+[v _lcd_clear `(v ~T0 @X0 1 ef ]
+{
+[; ;lcd_lib.c: 111: void lcd_clear(){
+[e :U _lcd_clear ]
+[f ]
+[; ;lcd_lib.c: 112: for(uint8_t row = 0; row < 2; row++){
+"112
+{
+[v _row `uc ~T0 @X0 1 a ]
+[e = _row -> -> 0 `i `uc ]
+[e $ < -> _row `i -> 2 `i 353  ]
+[e $U 354  ]
+[e :U 353 ]
+{
+[; ;lcd_lib.c: 113: for(uint8_t col = 0; col < 16; col++){
+"113
+{
+[v _col `uc ~T0 @X0 1 a ]
+[e = _col -> -> 0 `i `uc ]
+[e $ < -> _col `i -> 16 `i 356  ]
+[e $U 357  ]
+[e :U 356 ]
+{
+[; ;lcd_lib.c: 114: lcd_set_cursor(col, row);
+"114
+[e ( _lcd_set_cursor (2 , _col _row ]
+[; ;lcd_lib.c: 115: lcd_print(" ");
+"115
+[e ( _lcd_print (1 -> :s 1C `*uc ]
+"116
+}
+"113
+[e ++ _col -> -> 1 `i `uc ]
+[e $ < -> _col `i -> 16 `i 356  ]
+[e :U 357 ]
+"116
+}
+"117
+}
+"112
+[e ++ _row -> -> 1 `i `uc ]
+[e $ < -> _row `i -> 2 `i 353  ]
+[e :U 354 ]
+"117
+}
+[; ;lcd_lib.c: 116: }
+[; ;lcd_lib.c: 117: }
+[; ;lcd_lib.c: 118: }
+"118
+[e :UE 352 ]
+}
+"120
+[v _lcd_set_cursor `(v ~T0 @X0 1 ef2`uc`uc ]
+{
+[; ;lcd_lib.c: 120: void lcd_set_cursor(uint8_t col, uint8_t row){
+[e :U _lcd_set_cursor ]
+[v _col `uc ~T0 @X0 1 r1 ]
+[v _row `uc ~T0 @X0 1 r2 ]
+[f ]
+[v F2395 `uc ~T0 @X0 -> 0 `x s ]
+[i F2395
+:U ..
+"121
+-> -> 0 `i `uc
+-> -> 64 `i `uc
+-> -> 20 `i `uc
+-> -> 84 `i `uc
+..
+]
+[v _row_offsets `uc ~T0 @X0 4  a ]
+[; ;lcd_lib.c: 121: uint8_t row_offsets[] = {0x00, 0x40, 0x14, 0x54};
+[e = _row_offsets F2395 ]
+[; ;lcd_lib.c: 122: if(row > 2){
+"122
+[e $ ! > -> _row `i -> 2 `i 360  ]
+{
+[; ;lcd_lib.c: 123: row = 2 - 1;
+"123
+[e = _row -> - -> 2 `i -> 1 `i `uc ]
+"124
+}
+[e :U 360 ]
+"125
+[v _cmd `uc ~T0 @X0 1 a ]
+[; ;lcd_lib.c: 124: }
+[; ;lcd_lib.c: 125: uint8_t cmd = 0x80 | (col + row_offsets[row]);
+[e = _cmd -> | -> 128 `i + -> _col `i -> *U + &U _row_offsets * -> _row `ux -> -> # *U &U _row_offsets `ui `ux `i `uc ]
+[; ;lcd_lib.c: 126: command(cmd, 0);
+"126
+[e ( _command (2 , _cmd -> -> 0 `i `uc ]
+[; ;lcd_lib.c: 127: }
+"127
+[e :UE 359 ]
+}
+"129
+[v _lcd_print `(v ~T0 @X0 1 ef1`*uc ]
+{
+[; ;lcd_lib.c: 129: void lcd_print(char *str) {
+[e :U _lcd_print ]
+[v _str `*uc ~T0 @X0 1 r1 ]
+[f ]
+[; ;lcd_lib.c: 130: while (*str) {
+"130
+[e $U 362  ]
+[e :U 363 ]
+{
+"131
+[v _cmd `uc ~T0 @X0 1 a ]
+[; ;lcd_lib.c: 131: uint8_t cmd = *str++;
+[e = _cmd *U ++ _str * -> -> 1 `i `x -> -> # *U _str `i `x ]
+[; ;lcd_lib.c: 132: command(cmd, 0b00000001);
+"132
+[e ( _command (2 , _cmd -> -> 1 `i `uc ]
+"133
+}
+[e :U 362 ]
+"130
+[e $ != -> *U _str `i -> -> -> 0 `i `uc `i 363  ]
+[e :U 364 ]
+[; ;lcd_lib.c: 133: }
+[; ;lcd_lib.c: 134: }
+"134
+[e :UE 361 ]
+}
+"136
+[v _command `(v ~T0 @X0 1 ef2`uc`uc ]
+{
+[; ;lcd_lib.c: 136: void command(uint8_t val, uint8_t mode){
+[e :U _command ]
+[v _val `uc ~T0 @X0 1 r1 ]
+[v _mode `uc ~T0 @X0 1 r2 ]
+[f ]
+"137
+[v _highnib `uc ~T0 @X0 1 a ]
+[; ;lcd_lib.c: 137: uint8_t highnib = (val & 0xf0) | _backlightval | mode;
+[e = _highnib -> | | & -> _val `i -> 240 `i -> __backlightval `i -> _mode `i `uc ]
+"138
+[v _lownib `uc ~T0 @X0 1 a ]
+[; ;lcd_lib.c: 138: uint8_t lownib = ((val << 4) & 0xf0) | _backlightval | mode;
+[e = _lownib -> | | & << -> _val `i -> 4 `i -> 240 `i -> __backlightval `i -> _mode `i `uc ]
+[; ;lcd_lib.c: 140: lcd_cmd(highnib);
+"140
+[e ( _lcd_cmd (1 _highnib ]
+[; ;lcd_lib.c: 141: lcd_cmd(highnib | 0b00000100);
+"141
+[e ( _lcd_cmd (1 -> | -> _highnib `i -> 4 `i `uc ]
+[; ;lcd_lib.c: 142: lcd_cmd(highnib & ~0b00000100);
+"142
+[e ( _lcd_cmd (1 -> & -> _highnib `i ~ -> 4 `i `uc ]
+[; ;lcd_lib.c: 144: _delay((unsigned long)((100)*(8000000/4000000.0)));
+"144
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 146: lcd_cmd(lownib);
+"146
+[e ( _lcd_cmd (1 _lownib ]
+[; ;lcd_lib.c: 147: lcd_cmd(lownib | 0b00000100);
+"147
+[e ( _lcd_cmd (1 -> | -> _lownib `i -> 4 `i `uc ]
+[; ;lcd_lib.c: 148: lcd_cmd(lownib & ~0b00000100);
+"148
+[e ( _lcd_cmd (1 -> & -> _lownib `i ~ -> 4 `i `uc ]
+[; ;lcd_lib.c: 149: }
+"149
+[e :UE 365 ]
+}
+[a 1C 32 0 ]
+

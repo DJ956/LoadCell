@@ -4328,27 +4328,119 @@ void OSCILLATOR_Initialize(void);
 # 94
 void WDT_Initialize(void);
 
-# 4 "loadcell.h"
+# 9 "loadcell.h"
 signed long weight_dat;
 signed long weight_zero;
 
-# 12
+# 17
 long get_scale_val(uint8_t n);
 
-# 19
+# 24
 float scale_convert_gram(signed long count);
 
-# 4 "main.c"
+# 9 "lcd_lib.h"
+void lcd_init();
+void lcd_backlight();
+void lcd_cmd(uint8_t cmd);
+void lcd_clear();
+void lcd_set_cursor(uint8_t col, uint8_t row);
+void lcd_print(char *str);
+
+void command(uint8_t val, uint8_t mode);
+
+# 4 "C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\__size_t.h"
+typedef unsigned size_t;
+
+# 7 "C:\Program Files\Microchip\xc8\v2.32\pic\include\c90\stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "C:\Program Files\Microchip\xc8\v2.32\pic\include\c90\stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 88
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 6 "main.c"
 void main(void)
 {
 SYSTEM_Initialize();
 
+
+WPUB = 0x24;
+OPTION_REGbits.nWPUEN = 0;
+
+
+ANSELA = 0x00;
+ANSELB = 0x00;
+
+
+
+TRISA = 0x04;
+
+LATA = 0x00;
+LATB = 0x00;
+
+
+
+SSP2ADD = 0x13;
+SSP2CON1 = 0x28;
+SSP2CON2 = 0x0;
+SSP2STAT = 0;
+
+lcd_init();
+lcd_backlight();
+lcd_set_cursor(0, 0);
+
+lcd_print("HIZ");
+
+_delay((unsigned long)((1000)*(8000000/4000.0)));
+
+lcd_set_cursor(3, 0);
+lcd_print("12:00");
+
 weight_zero = get_scale_val(50);
 
-
+char str[16];
 while (1)
 {
 weight_dat = get_scale_val(8);
 float weight_gram = scale_convert_gram(weight_dat);
+
+sprintf(str, "%d g", weight_gram);
+lcd_print(str);
 }
 }

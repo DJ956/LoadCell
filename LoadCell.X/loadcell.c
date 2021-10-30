@@ -1,10 +1,6 @@
 #include "loadcell.h"
 #include "./mcc_generated_files/mcc.h"
 
-#define CELL_CLK 0x00
-#define CELL_DAT 0x00
-
-
 /**
  * LoadCell clock pin set low
  */

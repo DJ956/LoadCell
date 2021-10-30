@@ -2,10 +2,55 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
 "69 mcc_generated_files/mcc.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-"12 loadcell.h
+"3516 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\proc\pic16f1827.h
+[v _WPUB `Vuc ~T0 @X0 0 e@525 ]
+"1461
+[s S78 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S78 . PS0 PS1 PS2 PSA TMR0SE TMR0CS INTEDG nWPUEN ]
+"1471
+[s S79 :3 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S79 . PS . T0SE T0CS ]
+"1460
+[u S77 `S78 1 `S79 1 ]
+[n S77 . . . ]
+"1478
+[v _OPTION_REGbits `VS77 ~T0 @X0 0 e@149 ]
+"2861
+[v _ANSELA `Vuc ~T0 @X0 0 e@396 ]
+"2913
+[v _ANSELB `Vuc ~T0 @X0 0 e@397 ]
+"1152
+[v _TRISA `Vuc ~T0 @X0 0 e@140 ]
+"2039
+[v _LATA `Vuc ~T0 @X0 0 e@268 ]
+"2096
+[v _LATB `Vuc ~T0 @X0 0 e@269 ]
+"4290
+[v _SSP2ADD `Vuc ~T0 @X0 0 e@538 ]
+"4392
+[v _SSP2CON1 `Vuc ~T0 @X0 0 e@541 ]
+"4462
+[v _SSP2CON2 `Vuc ~T0 @X0 0 e@542 ]
+"4330
+[v _SSP2STAT `Vuc ~T0 @X0 0 e@540 ]
+"9 lcd_lib.h
+[v _lcd_init `(v ~T0 @X0 0 ef ]
+"10
+[v _lcd_backlight `(v ~T0 @X0 0 ef ]
+"13
+[v _lcd_set_cursor `(v ~T0 @X0 0 ef2`uc`uc ]
+"14
+[v _lcd_print `(v ~T0 @X0 0 ef1`*uc ]
+[v F2287 `(v ~T0 @X0 1 tf1`ul ]
+"92 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\pic.h
+[v __delay `JF2287 ~T0 @X0 0 e ]
+[p i __delay ]
+"17 loadcell.h
 [v _get_scale_val `(l ~T0 @X0 0 ef1`uc ]
-"19
+"24
 [v _scale_convert_gram `(f ~T0 @X0 0 ef1`l ]
+"194 C:\Program Files\Microchip\xc8\v2.32\pic\include\c90\stdio.h
+[v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
 [; ;xc8\pic\include\xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc8\pic\include\xc.h: 20: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2803,50 +2848,145 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.h: 69: void SYSTEM_Initialize(void);
 [; ;mcc.h: 82: void OSCILLATOR_Initialize(void);
 [; ;mcc.h: 94: void WDT_Initialize(void);
-"4 loadcell.h
+"9 loadcell.h
 [v _weight_dat `l ~T0 @X0 1 e ]
-[; ;loadcell.h: 4: signed long weight_dat;
-"5
+[; ;loadcell.h: 9: signed long weight_dat;
+"10
 [v _weight_zero `l ~T0 @X0 1 e ]
-[; ;loadcell.h: 5: signed long weight_zero;
-[; ;loadcell.h: 12: long get_scale_val(uint8_t n);
-[; ;loadcell.h: 19: float scale_convert_gram(signed long count);
+[; ;loadcell.h: 10: signed long weight_zero;
+[; ;loadcell.h: 17: long get_scale_val(uint8_t n);
+[; ;loadcell.h: 24: float scale_convert_gram(signed long count);
+[; ;lcd_lib.h: 9: void lcd_init();
+[; ;lcd_lib.h: 10: void lcd_backlight();
+[; ;lcd_lib.h: 11: void lcd_cmd(uint8_t cmd);
+[; ;lcd_lib.h: 12: void lcd_clear();
+[; ;lcd_lib.h: 13: void lcd_set_cursor(uint8_t col, uint8_t row);
+[; ;lcd_lib.h: 14: void lcd_print(char *str);
+[; ;lcd_lib.h: 16: void command(uint8_t val, uint8_t mode);
+[; ;xc8\pic\include\__size_t.h: 4: typedef unsigned size_t;
+[; ;stdarg.h: 7: typedef void * va_list[1];
+[; ;stdarg.h: 10: extern void * __va_start(void);
+[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
+[; ;stdio.h: 43: struct __prbuf
+[; ;stdio.h: 44: {
+[; ;stdio.h: 45: char * ptr;
+[; ;stdio.h: 46: void (* func)(char);
+[; ;stdio.h: 47: };
+[; ;stdio.h: 88: extern int cprintf(char *, ...);
+[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+[; ;stdio.h: 183: extern char * gets(char *);
+[; ;stdio.h: 184: extern int puts(const char *);
+[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
+[; ;stdio.h: 195: extern int printf(const char *, ...);
 [v $root$_main `(v ~T0 @X0 0 e ]
-"4 main.c
+"6 main.c
 [v _main `(v ~T0 @X0 1 ef ]
-"5
+"7
 {
-[; ;main.c: 4: void main(void)
-[; ;main.c: 5: {
+[; ;main.c: 6: void main(void)
+[; ;main.c: 7: {
 [e :U _main ]
 [f ]
-[; ;main.c: 6: SYSTEM_Initialize();
-"6
-[e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 8: weight_zero = get_scale_val(50);
+[; ;main.c: 8: SYSTEM_Initialize();
 "8
-[e = _weight_zero ( _get_scale_val (1 -> -> 50 `i `uc ]
-[; ;main.c: 11: while (1)
+[e ( _SYSTEM_Initialize ..  ]
+[; ;main.c: 11: WPUB = 0x24;
 "11
-[e :U 351 ]
-[; ;main.c: 12: {
+[e = _WPUB -> -> 36 `i `uc ]
+[; ;main.c: 12: OPTION_REGbits.nWPUEN = 0;
 "12
-{
-[; ;main.c: 13: weight_dat = get_scale_val(8);
-"13
-[e = _weight_dat ( _get_scale_val (1 -> -> 8 `i `uc ]
-"14
-[v _weight_gram `f ~T0 @X0 1 a ]
-[; ;main.c: 14: float weight_gram = scale_convert_gram(weight_dat);
-[e = _weight_gram ( _scale_convert_gram (1 _weight_dat ]
+[e = . . _OPTION_REGbits 0 7 -> -> 0 `i `uc ]
+[; ;main.c: 15: ANSELA = 0x00;
 "15
-}
-[e :U 350 ]
-"11
-[e $U 351  ]
-[e :U 352 ]
-[; ;main.c: 15: }
-[; ;main.c: 16: }
+[e = _ANSELA -> -> 0 `i `uc ]
+[; ;main.c: 16: ANSELB = 0x00;
 "16
-[e :UE 349 ]
+[e = _ANSELB -> -> 0 `i `uc ]
+[; ;main.c: 20: TRISA = 0x04;
+"20
+[e = _TRISA -> -> 4 `i `uc ]
+[; ;main.c: 22: LATA = 0x00;
+"22
+[e = _LATA -> -> 0 `i `uc ]
+[; ;main.c: 23: LATB = 0x00;
+"23
+[e = _LATB -> -> 0 `i `uc ]
+[; ;main.c: 27: SSP2ADD = 0x13;
+"27
+[e = _SSP2ADD -> -> 19 `i `uc ]
+[; ;main.c: 28: SSP2CON1 = 0x28;
+"28
+[e = _SSP2CON1 -> -> 40 `i `uc ]
+[; ;main.c: 29: SSP2CON2 = 0x0;
+"29
+[e = _SSP2CON2 -> -> 0 `i `uc ]
+[; ;main.c: 30: SSP2STAT = 0;
+"30
+[e = _SSP2STAT -> -> 0 `i `uc ]
+[; ;main.c: 32: lcd_init();
+"32
+[e ( _lcd_init ..  ]
+[; ;main.c: 33: lcd_backlight();
+"33
+[e ( _lcd_backlight ..  ]
+[; ;main.c: 34: lcd_set_cursor(0, 0);
+"34
+[e ( _lcd_set_cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 36: lcd_print("HIZ");
+"36
+[e ( _lcd_print (1 -> :s 1C `*uc ]
+[; ;main.c: 38: _delay((unsigned long)((1000)*(8000000/4000.0)));
+"38
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;main.c: 40: lcd_set_cursor(3, 0);
+"40
+[e ( _lcd_set_cursor (2 , -> -> 3 `i `uc -> -> 0 `i `uc ]
+[; ;main.c: 41: lcd_print("12:00");
+"41
+[e ( _lcd_print (1 -> :s 2C `*uc ]
+[; ;main.c: 43: weight_zero = get_scale_val(50);
+"43
+[e = _weight_zero ( _get_scale_val (1 -> -> 50 `i `uc ]
+"45
+[v _str `uc ~T0 @X0 -> 16 `i a ]
+[; ;main.c: 45: char str[16];
+[; ;main.c: 46: while (1)
+"46
+[e :U 352 ]
+[; ;main.c: 47: {
+"47
+{
+[; ;main.c: 48: weight_dat = get_scale_val(8);
+"48
+[e = _weight_dat ( _get_scale_val (1 -> -> 8 `i `uc ]
+"49
+[v _weight_gram `f ~T0 @X0 1 a ]
+[; ;main.c: 49: float weight_gram = scale_convert_gram(weight_dat);
+[e = _weight_gram ( _scale_convert_gram (1 _weight_dat ]
+[; ;main.c: 51: sprintf(str, "%d g", weight_gram);
+"51
+[e ( _sprintf (1 , (. , &U _str :s 3C -> _weight_gram `d ]
+[; ;main.c: 52: lcd_print(str);
+"52
+[e ( _lcd_print (1 &U _str ]
+"53
 }
+[e :U 351 ]
+"46
+[e $U 352  ]
+[e :U 353 ]
+[; ;main.c: 53: }
+[; ;main.c: 54: }
+"54
+[e :UE 350 ]
+}
+[p f _sprintf 8388736 ]
+[a 3C 37 100 32 103 0 ]
+[a 1C 72 73 90 0 ]
+[a 2C 49 50 58 48 48 0 ]
