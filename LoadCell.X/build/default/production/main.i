@@ -4328,14 +4328,14 @@ void OSCILLATOR_Initialize(void);
 # 94
 void WDT_Initialize(void);
 
-# 9 "loadcell.h"
+# 12 "loadcell.h"
 unsigned short long weight_dat;
 unsigned short long weight_zero;
 
-# 17
+# 20
 unsigned short long get_scale_val(uint8_t n);
 
-# 24
+# 27
 float scale_convert_gram(unsigned short long count);
 
 # 9 "lcd_lib.h"
@@ -4440,7 +4440,7 @@ lcd_print("load cell set up");
 lcd_set_cursor(0, 1);
 float weight_gram = scale_convert_gram(weight_dat);
 
-sprintf(str, "%lu g", weight_gram);
+sprintf(str, "%d g", weight_gram);
 
 lcd_print(str);
 
@@ -4451,7 +4451,7 @@ while (1)
 weight_dat = get_scale_val(8);
 float weight_gram = scale_convert_gram(weight_dat);
 
-sprintf(str, "%lu g", weight_gram);
+sprintf(str, "%d g", weight_gram);
 
 lcd_clear();
 lcd_set_cursor(0, 0);

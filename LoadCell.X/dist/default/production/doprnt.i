@@ -230,11 +230,9 @@ extern double round(double);
 #pragma warning disable 350
 
 # 358
-const static unsigned long dpowers[] = {1, 10, 100, 1000, 10000,
+const static unsigned int dpowers[] = {1, 10, 100, 1000, 10000,
 
-100000, 1000000, 10000000, 100000000,
-1000000000
-
+# 363
 };
 
 # 463
@@ -250,10 +248,11 @@ va_list ap;
 
 char c;
 
-# 517
-int prec;
+# 521
+signed char prec;
 
-# 525
+
+
 unsigned char flag;
 
 # 540
@@ -262,7 +261,7 @@ unsigned long vd;
 double integ;
 } tmpval;
 
-unsigned long val;
+unsigned int val;
 unsigned len;
 const char * cp;
 
@@ -282,19 +281,16 @@ continue;
 # 565
 flag = 0;
 
-# 659
-loop:
-
+# 661
 switch(c = *f++) {
 
 case 0:
 goto alldone;
 
-
-case 'l':
-
-flag |= 0x10;
-goto loop;
+# 723
+case 'd':
+case 'i':
+break;
 
 # 828
 default:
@@ -302,25 +298,20 @@ default:
 # 839
 continue;
 
-
-
-case 'u':
-flag |= 0xC0;
-break;
-
-
+# 848
 }
 
-# 1299
+# 1279
 {
 
-# 1307
-if(flag & 0x10)
-val = (*(unsigned long *)__va_arg((*(unsigned long **)ap), (unsigned long)0));
-else
+# 1285
+val = (unsigned int)(*(int *)__va_arg((*(int **)ap), (int)0));
 
+if((int)val < 0) {
+flag |= 0x03;
+val = -val;
+}
 
-val = (*(unsigned *)__va_arg((*(unsigned **)ap), (unsigned)0));
 }
 
 # 1331
@@ -330,6 +321,10 @@ break;
 
 # 1448
 {
+
+# 1464
+if(flag & 0x03)
+((*sp++ = ('-')));
 
 # 1495
 }
@@ -343,7 +338,7 @@ while(prec--) {
 {
 
 # 1515
-c = (val / dpowers[(unsigned int)prec]) % 10 + '0';
+c = (val / dpowers[(unsigned char)prec]) % 10 + '0';
 
 # 1549
 }

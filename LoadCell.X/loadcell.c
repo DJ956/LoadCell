@@ -64,6 +64,6 @@ unsigned short long get_scale_val(uint8_t n)
 float scale_convert_gram(unsigned short long count)
 { //ADCのカウント値をグラムに変換
     float temp = count - weight_zero;
-    //temp = temp / 3035;
+    temp = temp / DIVIDE_VAL;
     return temp;
 }

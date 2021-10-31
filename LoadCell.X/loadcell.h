@@ -6,6 +6,9 @@
 //RA3
 #define CELL_DAT 0x08
 
+//DIVIDE value
+#define DIVIDE_VAL 486
+
 unsigned short long weight_dat;
 unsigned short long weight_zero;
 

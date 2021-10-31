@@ -4293,14 +4293,14 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 9 "loadcell.h"
+# 12 "loadcell.h"
 unsigned short long weight_dat;
 unsigned short long weight_zero;
 
-# 17
+# 20
 unsigned short long get_scale_val(uint8_t n);
 
-# 24
+# 27
 float scale_convert_gram(unsigned short long count);
 
 # 78 "./mcc_generated_files/pin_manager.h"
@@ -4397,6 +4397,6 @@ return weight_count;
 float scale_convert_gram(unsigned short long count)
 {
 float temp = count - weight_zero;
-
+temp = temp / 486;
 return temp;
 }

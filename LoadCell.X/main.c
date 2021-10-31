@@ -48,7 +48,7 @@ void main(void)
     lcd_set_cursor(0, 1);
     float weight_gram = scale_convert_gram(weight_dat);
         
-    sprintf(str, "%lu g", weight_gram);
+    sprintf(str, "%d g", weight_gram);
         
     lcd_print(str);
     
@@ -59,7 +59,7 @@ void main(void)
         weight_dat = get_scale_val(8);
         float weight_gram = scale_convert_gram(weight_dat);
         
-        sprintf(str, "%lu g", weight_gram);
+        sprintf(str, "%d g", weight_gram);
         
         lcd_clear();
         lcd_set_cursor(0, 0);

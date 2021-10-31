@@ -45,11 +45,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 "92 C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC12-16F1xxx_DFP/1.2.63/xc8\pic\include\pic.h
 [v __delay `JF2287 ~T0 @X0 0 e ]
 [p i __delay ]
-"17 loadcell.h
+"20 loadcell.h
 [v _get_scale_val `(um ~T0 @X0 0 ef1`uc ]
 "12 lcd_lib.h
 [v _lcd_clear `(v ~T0 @X0 0 ef ]
-"24 loadcell.h
+"27 loadcell.h
 [v _scale_convert_gram `(f ~T0 @X0 0 ef1`um ]
 "194 C:\Program Files\Microchip\xc8\v2.32\pic\include\c90\stdio.h
 [v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
@@ -2850,14 +2850,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.h: 69: void SYSTEM_Initialize(void);
 [; ;mcc.h: 82: void OSCILLATOR_Initialize(void);
 [; ;mcc.h: 94: void WDT_Initialize(void);
-"9 loadcell.h
+"12 loadcell.h
 [v _weight_dat `um ~T0 @X0 1 e ]
-[; ;loadcell.h: 9: unsigned short long weight_dat;
-"10
+[; ;loadcell.h: 12: unsigned short long weight_dat;
+"13
 [v _weight_zero `um ~T0 @X0 1 e ]
-[; ;loadcell.h: 10: unsigned short long weight_zero;
-[; ;loadcell.h: 17: unsigned short long get_scale_val(uint8_t n);
-[; ;loadcell.h: 24: float scale_convert_gram(unsigned short long count);
+[; ;loadcell.h: 13: unsigned short long weight_zero;
+[; ;loadcell.h: 20: unsigned short long get_scale_val(uint8_t n);
+[; ;loadcell.h: 27: float scale_convert_gram(unsigned short long count);
 [; ;lcd_lib.h: 9: void lcd_init();
 [; ;lcd_lib.h: 10: void lcd_backlight();
 [; ;lcd_lib.h: 11: void lcd_cmd(uint8_t cmd);
@@ -2968,7 +2968,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _weight_gram `f ~T0 @X0 1 a ]
 [; ;main.c: 49: float weight_gram = scale_convert_gram(weight_dat);
 [e = _weight_gram ( _scale_convert_gram (1 _weight_dat ]
-[; ;main.c: 51: sprintf(str, "%lu g", weight_gram);
+[; ;main.c: 51: sprintf(str, "%d g", weight_gram);
 "51
 [e ( _sprintf (1 , (. , &U _str :s 3C -> _weight_gram `d ]
 [; ;main.c: 53: lcd_print(str);
@@ -2990,7 +2990,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 60: float weight_gram = scale_convert_gram(weight_dat);
 "60
 [e = _weight_gram ( _scale_convert_gram (1 _weight_dat ]
-[; ;main.c: 62: sprintf(str, "%lu g", weight_gram);
+[; ;main.c: 62: sprintf(str, "%d g", weight_gram);
 "62
 [e ( _sprintf (1 , (. , &U _str :s 4C -> _weight_gram `d ]
 [; ;main.c: 64: lcd_clear();
@@ -3016,8 +3016,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 "70
 [e :UE 350 ]
 }
-[p f _sprintf 8389648 ]
+[p f _sprintf 8388736 ]
 [a 2C 108 111 97 100 32 99 101 108 108 32 115 101 116 32 117 112 0 ]
-[a 3C 37 108 117 32 103 0 ]
-[a 4C 37 108 117 32 103 0 ]
+[a 3C 37 100 32 103 0 ]
+[a 4C 37 100 32 103 0 ]
 [a 1C 73 110 105 116 105 97 108 105 122 101 0 ]

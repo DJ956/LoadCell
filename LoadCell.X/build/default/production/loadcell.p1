@@ -2795,14 +2795,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 282: typedef uint32_t uintmax_t;
 [; ;stdint.h: 289: typedef int16_t intptr_t;
 [; ;stdint.h: 294: typedef uint16_t uintptr_t;
-"9 loadcell.h
+"12 loadcell.h
 [v _weight_dat `um ~T0 @X0 1 e ]
-[; ;loadcell.h: 9: unsigned short long weight_dat;
-"10
+[; ;loadcell.h: 12: unsigned short long weight_dat;
+"13
 [v _weight_zero `um ~T0 @X0 1 e ]
-[; ;loadcell.h: 10: unsigned short long weight_zero;
-[; ;loadcell.h: 17: unsigned short long get_scale_val(uint8_t n);
-[; ;loadcell.h: 24: float scale_convert_gram(unsigned short long count);
+[; ;loadcell.h: 13: unsigned short long weight_zero;
+[; ;loadcell.h: 20: unsigned short long get_scale_val(uint8_t n);
+[; ;loadcell.h: 27: float scale_convert_gram(unsigned short long count);
 [; ;pin_manager.h: 78: void PIN_MANAGER_Initialize (void);
 [; ;pin_manager.h: 90: void PIN_MANAGER_IOC(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
@@ -3072,6 +3072,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _temp `f ~T0 @X0 1 a ]
 [; ;loadcell.c: 66: float temp = count - weight_zero;
 [e = _temp -> - _count _weight_zero `f ]
+[; ;loadcell.c: 67: temp = temp / 486;
+"67
+[e = _temp / _temp -> -> 486 `i `f ]
 [; ;loadcell.c: 68: return temp;
 "68
 [e ) _temp ]
