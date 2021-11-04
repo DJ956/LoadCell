@@ -25,12 +25,12 @@ uint8_t get_CELL_DAT_VAL(){
     return 0;
 }
 
-unsigned short long get_scale_val(uint8_t n)
+long get_scale_val(uint8_t n)
 {
     set_CELL_CLK_LOW();
     
-    unsigned short long weight_count = 0;
-    unsigned short long weight_add = 0;
+    long weight_count = 0;
+    long weight_add = 0;
     for (uint8_t j = 0; j < n; j++)
     {
         while (get_CELL_DAT_VAL() == 0);
@@ -61,7 +61,7 @@ unsigned short long get_scale_val(uint8_t n)
     return weight_count;
 }
 
-float scale_convert_gram(unsigned short long count)
+float scale_convert_gram(signed long count)
 { //ADCのカウント値をグラムに変換
     float temp = count - weight_zero;
     temp = temp / DIVIDE_VAL;

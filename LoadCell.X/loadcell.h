@@ -1,27 +1,27 @@
 #include <xc.h>
 #include <stdint.h>
 
+//RA0
+#define CELL_CLK 0x01
 //RA1
-#define CELL_CLK 0x02
-//RA3
-#define CELL_DAT 0x08
+#define CELL_DAT 0x02
 
 //DIVIDE value
 #define DIVIDE_VAL 486
 
-unsigned short long weight_dat;
-unsigned short long weight_zero;
+signed long weight_dat;
+signed long weight_zero;
 
 /**
  * get scale value
  * @param scale count
  * @return 
  */
-unsigned short long get_scale_val(uint8_t n);
+long get_scale_val(uint8_t n);
 
 /**
  * scale value to gram value
  * @param count
  * @return gram value
  */
-float scale_convert_gram(unsigned short long count);
+float scale_convert_gram(signed long count);

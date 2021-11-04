@@ -3,15 +3,15 @@
   <executable name="dist/default/production\LoadCell.X.production.hex">
     <memory name="program">
       <units>words</units>
-      <length>4096</length>
-      <used>2093</used>
-      <free>2003</free>
+      <length>16384</length>
+      <used>6959</used>
+      <free>9425</free>
     </memory>
     <memory name="data">
       <units>bytes</units>
-      <length>384</length>
-      <used>77</used>
-      <free>307</free>
+      <length>1024</length>
+      <used>167</used>
+      <free>857</free>
     </memory>
   </executable>
 </project>
