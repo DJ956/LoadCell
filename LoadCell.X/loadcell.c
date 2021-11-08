@@ -12,7 +12,7 @@ void set_CELL_CLK_LOW(){ LATA &= ~ CELL_CLK;}
 void set_CELL_CLK_HIGH(){ LATA |= CELL_CLK;}
 
 
-uint8_t get_CELL_DAT_VAL(){
+int get_CELL_DAT_VAL(){
     if(CELL_DAT == 0x01){ return PORTAbits.RA0; }
     if(CELL_DAT == 0x02){ return PORTAbits.RA1; }
     if(CELL_DAT == 0x04){ return PORTAbits.RA2; }
@@ -25,12 +25,12 @@ uint8_t get_CELL_DAT_VAL(){
     return 0;
 }
 
-long get_scale_val(uint8_t n)
+unsigned long get_scale_val(int n)
 {
     set_CELL_CLK_LOW();
     
-    long weight_count = 0;
-    long weight_add = 0;
+    unsigned long weight_count = 0;
+    unsigned  long weight_add = 0;
     for (uint8_t j = 0; j < n; j++)
     {
         while (get_CELL_DAT_VAL() == 0);
@@ -52,16 +52,18 @@ long get_scale_val(uint8_t n)
             __delay_us(10);
             set_CELL_CLK_LOW();
             __delay_us(10);
-        }
-        
+        };
         weight_add += weight_count;
         weight_count = 0;
     }
     weight_count = weight_add / n;
+    /** 最上位ビットを反転させる */
+    /** 24th bit flip*/
+    weight_count = weight_count ^ 0x800000;
     return weight_count;
 }
 
-float scale_convert_gram(signed long count)
+float scale_convert_gram(unsigned long count)
 { //ADCのカウント値をグラムに変換
     float temp = count - weight_zero;
     temp = temp / DIVIDE_VAL;

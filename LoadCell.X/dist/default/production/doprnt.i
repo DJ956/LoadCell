@@ -364,15 +364,28 @@ flag |= 0x1000;
 
 }
 
-# 661
+
+loop:
+
 switch(c = *f++) {
 
 case 0:
 goto alldone;
 
+
+case 'l':
+
+flag |= 0x10;
+goto loop;
+
 # 688
 case 'f':
 flag |= 0x400;
+break;
+
+# 723
+case 'd':
+case 'i':
 break;
 
 # 828
@@ -381,7 +394,13 @@ default:
 # 839
 continue;
 
-# 848
+
+
+case 'u':
+flag |= 0x40;
+break;
+
+
 }
 
 
@@ -517,9 +536,50 @@ prec--;
 continue;
 }
 
-# 1316
+
+
+
+if((flag & 0x40) == 0x00)
+
+{
+
+if(flag & 0x10)
+val = (unsigned long)(*(long *)__va_arg((*(long **)ap), (long)0));
+else
+
+val = (unsigned long)(*(int *)__va_arg((*(int **)ap), (int)0));
+
+if((long)val < 0) {
+flag |= 0x03;
+val = -val;
+}
+
+}
+
+else
+
+
+
+
+{
+
+# 1307
+if(flag & 0x10)
+val = (*(unsigned long *)__va_arg((*(unsigned long **)ap), (unsigned long)0));
+else
+
+
+val = (*(unsigned *)__va_arg((*(unsigned **)ap), (unsigned)0));
+}
+
+
 if(prec == 0 && val == 0)
 prec++;
+
+# 1331
+for(c = 1 ; c != sizeof dpowers/sizeof dpowers[0] ; c++)
+if(val < dpowers[c])
+break;
 
 # 1365
 if(c < prec)
@@ -560,6 +620,20 @@ if(flag & 0x03)
 ((*sp++ = ('-')));
 
 # 1495
+}
+
+# 1500
+while(prec--) {
+
+# 1504
+{
+
+# 1515
+c = (val / dpowers[(unsigned int)prec]) % 10 + '0';
+
+# 1549
+}
+((*sp++ = (c)));
 }
 
 # 1559

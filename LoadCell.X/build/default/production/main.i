@@ -4935,14 +4935,14 @@ void OSCILLATOR_Initialize(void);
 void WDT_Initialize(void);
 
 # 12 "loadcell.h"
-signed long weight_dat;
-signed long weight_zero;
+unsigned long weight_dat;
+unsigned long weight_zero;
 
 # 20
-long get_scale_val(uint8_t n);
+unsigned long get_scale_val(int n);
 
 # 27
-float scale_convert_gram(signed long count);
+float scale_convert_gram(unsigned long count);
 
 # 9 "lcd_lib.h"
 void lcd_init();
@@ -5001,7 +5001,8 @@ extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
 # 6 "main.c"
-char str[16];
+char gramstr[16];
+char valstr[16];
 
 void main(void)
 {
@@ -5031,24 +5032,40 @@ lcd_set_cursor(0, 0);
 
 
 lcd_print("Initialize");
+lcd_set_cursor(0, 1);
+lcd_print("Load cell Unit");
 
 _delay((unsigned long)((1000)*(8000000/4000.0)));
 
-weight_zero = get_scale_val(50);
+weight_zero = get_scale_val(3);
 
-_delay((unsigned long)((3000)*(8000000/4000.0)));
+lcd_clear();
+lcd_set_cursor(0,0);
+sprintf(valstr, "%lu val ", weight_zero);
+lcd_print(valstr);
+_delay((unsigned long)((500)*(8000000/4000.0)));
+
+lcd_clear();
+lcd_set_cursor(0,0);
+sprintf(valstr, "Divide val: %d", 493);
+lcd_print(valstr);
+_delay((unsigned long)((1500)*(8000000/4000.0)));
 
 while (1)
 {
-weight_dat = get_scale_val(8);
+weight_dat = get_scale_val(1);
 float weight_gram = scale_convert_gram(weight_dat);
 
-sprintf(str, "%3.2f g", weight_gram);
+sprintf(valstr, "%lu val", weight_dat);
+
+sprintf(gramstr, "%3.2f gram", weight_gram);
 
 lcd_clear();
 lcd_set_cursor(0, 0);
-lcd_print(str);
+lcd_print(valstr);
+lcd_set_cursor(0, 1);
+lcd_print(gramstr);
 
-_delay((unsigned long)((100)*(8000000/4000.0)));
+_delay((unsigned long)((1000)*(8000000/4000.0)));
 }
 }

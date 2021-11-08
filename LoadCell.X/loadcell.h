@@ -7,21 +7,21 @@
 #define CELL_DAT 0x02
 
 //DIVIDE value
-#define DIVIDE_VAL 486
+#define DIVIDE_VAL 493
 
-signed long weight_dat;
-signed long weight_zero;
+unsigned long weight_dat;
+unsigned long weight_zero;
 
 /**
  * get scale value
  * @param scale count
  * @return 
  */
-long get_scale_val(uint8_t n);
+unsigned long get_scale_val(int n);
 
 /**
  * scale value to gram value
  * @param count
  * @return gram value
  */
-float scale_convert_gram(signed long count);
+float scale_convert_gram(unsigned long count);

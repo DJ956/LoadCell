@@ -3347,10 +3347,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 "118
 [e :UE 352 ]
 }
-"120
+"125
 [v _lcd_set_cursor `(v ~T0 @X0 1 ef2`uc`uc ]
 {
-[; ;lcd_lib.c: 120: void lcd_set_cursor(uint8_t col, uint8_t row){
+[; ;lcd_lib.c: 125: void lcd_set_cursor(uint8_t col, uint8_t row){
 [e :U _lcd_set_cursor ]
 [v _col `uc ~T0 @X0 1 r1 ]
 [v _row `uc ~T0 @X0 1 r2 ]
@@ -3358,7 +3358,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v F2624 `uc ~T0 @X0 -> 0 `x s ]
 [i F2624
 :U ..
-"121
+"126
 -> -> 0 `i `uc
 -> -> 64 `i `uc
 -> -> 20 `i `uc
@@ -3366,99 +3366,99 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ]
 [v _row_offsets `uc ~T0 @X0 4  a ]
-[; ;lcd_lib.c: 121: uint8_t row_offsets[] = {0x00, 0x40, 0x14, 0x54};
+[; ;lcd_lib.c: 126: uint8_t row_offsets[] = {0x00, 0x40, 0x14, 0x54};
 [e = _row_offsets F2624 ]
-[; ;lcd_lib.c: 122: if(row > 2){
-"122
+[; ;lcd_lib.c: 127: if(row > 2){
+"127
 [e $ ! > -> _row `i -> 2 `i 360  ]
 {
-[; ;lcd_lib.c: 123: row = 2 - 1;
-"123
+[; ;lcd_lib.c: 128: row = 2 - 1;
+"128
 [e = _row -> - -> 2 `i -> 1 `i `uc ]
-"124
+"129
 }
 [e :U 360 ]
-"125
+"130
 [v _cmd `uc ~T0 @X0 1 a ]
-[; ;lcd_lib.c: 124: }
-[; ;lcd_lib.c: 125: uint8_t cmd = 0x80 | (col + row_offsets[row]);
+[; ;lcd_lib.c: 129: }
+[; ;lcd_lib.c: 130: uint8_t cmd = 0x80 | (col + row_offsets[row]);
 [e = _cmd -> | -> 128 `i + -> _col `i -> *U + &U _row_offsets * -> _row `ux -> -> # *U &U _row_offsets `ui `ux `i `uc ]
-[; ;lcd_lib.c: 126: command(cmd, 0);
-"126
+[; ;lcd_lib.c: 131: command(cmd, 0);
+"131
 [e ( _command (2 , _cmd -> -> 0 `i `uc ]
-[; ;lcd_lib.c: 127: }
-"127
+[; ;lcd_lib.c: 132: }
+"132
 [e :UE 359 ]
 }
-"129
+"134
 [v _lcd_print `(v ~T0 @X0 1 ef1`*uc ]
 {
-[; ;lcd_lib.c: 129: void lcd_print(char *str) {
+[; ;lcd_lib.c: 134: void lcd_print(char *str) {
 [e :U _lcd_print ]
 [v _str `*uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;lcd_lib.c: 130: while (*str) {
-"130
+[; ;lcd_lib.c: 135: while (*str) {
+"135
 [e $U 362  ]
 [e :U 363 ]
 {
-"131
+"136
 [v _cmd `uc ~T0 @X0 1 a ]
-[; ;lcd_lib.c: 131: uint8_t cmd = *str++;
+[; ;lcd_lib.c: 136: uint8_t cmd = *str++;
 [e = _cmd *U ++ _str * -> -> 1 `i `x -> -> # *U _str `i `x ]
-[; ;lcd_lib.c: 132: command(cmd, 0b00000001);
-"132
+[; ;lcd_lib.c: 137: command(cmd, 0b00000001);
+"137
 [e ( _command (2 , _cmd -> -> 1 `i `uc ]
-"133
+"138
 }
 [e :U 362 ]
-"130
+"135
 [e $ != -> *U _str `i -> -> -> 0 `i `uc `i 363  ]
 [e :U 364 ]
-[; ;lcd_lib.c: 133: }
-[; ;lcd_lib.c: 134: }
-"134
+[; ;lcd_lib.c: 138: }
+[; ;lcd_lib.c: 139: }
+"139
 [e :UE 361 ]
 }
-"136
+"141
 [v _command `(v ~T0 @X0 1 ef2`uc`uc ]
 {
-[; ;lcd_lib.c: 136: void command(uint8_t val, uint8_t mode){
+[; ;lcd_lib.c: 141: void command(uint8_t val, uint8_t mode){
 [e :U _command ]
 [v _val `uc ~T0 @X0 1 r1 ]
 [v _mode `uc ~T0 @X0 1 r2 ]
 [f ]
-"137
-[v _highnib `uc ~T0 @X0 1 a ]
-[; ;lcd_lib.c: 137: uint8_t highnib = (val & 0xf0) | _backlightval | mode;
-[e = _highnib -> | | & -> _val `i -> 240 `i -> __backlightval `i -> _mode `i `uc ]
-"138
-[v _lownib `uc ~T0 @X0 1 a ]
-[; ;lcd_lib.c: 138: uint8_t lownib = ((val << 4) & 0xf0) | _backlightval | mode;
-[e = _lownib -> | | & << -> _val `i -> 4 `i -> 240 `i -> __backlightval `i -> _mode `i `uc ]
-[; ;lcd_lib.c: 140: lcd_cmd(highnib);
-"140
-[e ( _lcd_cmd (1 _highnib ]
-[; ;lcd_lib.c: 141: lcd_cmd(highnib | 0b00000100);
-"141
-[e ( _lcd_cmd (1 -> | -> _highnib `i -> 4 `i `uc ]
-[; ;lcd_lib.c: 142: lcd_cmd(highnib & ~0b00000100);
 "142
-[e ( _lcd_cmd (1 -> & -> _highnib `i ~ -> 4 `i `uc ]
-[; ;lcd_lib.c: 144: _delay((unsigned long)((100)*(8000000/4000000.0)));
-"144
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-[; ;lcd_lib.c: 146: lcd_cmd(lownib);
+[v _highnib `uc ~T0 @X0 1 a ]
+[; ;lcd_lib.c: 142: uint8_t highnib = (val & 0xf0) | _backlightval | mode;
+[e = _highnib -> | | & -> _val `i -> 240 `i -> __backlightval `i -> _mode `i `uc ]
+"143
+[v _lownib `uc ~T0 @X0 1 a ]
+[; ;lcd_lib.c: 143: uint8_t lownib = ((val << 4) & 0xf0) | _backlightval | mode;
+[e = _lownib -> | | & << -> _val `i -> 4 `i -> 240 `i -> __backlightval `i -> _mode `i `uc ]
+[; ;lcd_lib.c: 145: lcd_cmd(highnib);
+"145
+[e ( _lcd_cmd (1 _highnib ]
+[; ;lcd_lib.c: 146: lcd_cmd(highnib | 0b00000100);
 "146
-[e ( _lcd_cmd (1 _lownib ]
-[; ;lcd_lib.c: 147: lcd_cmd(lownib | 0b00000100);
+[e ( _lcd_cmd (1 -> | -> _highnib `i -> 4 `i `uc ]
+[; ;lcd_lib.c: 147: lcd_cmd(highnib & ~0b00000100);
 "147
-[e ( _lcd_cmd (1 -> | -> _lownib `i -> 4 `i `uc ]
-[; ;lcd_lib.c: 148: lcd_cmd(lownib & ~0b00000100);
-"148
-[e ( _lcd_cmd (1 -> & -> _lownib `i ~ -> 4 `i `uc ]
-[; ;lcd_lib.c: 149: }
+[e ( _lcd_cmd (1 -> & -> _highnib `i ~ -> 4 `i `uc ]
+[; ;lcd_lib.c: 149: _delay((unsigned long)((100)*(8000000/4000000.0)));
 "149
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+[; ;lcd_lib.c: 151: lcd_cmd(lownib);
+"151
+[e ( _lcd_cmd (1 _lownib ]
+[; ;lcd_lib.c: 152: lcd_cmd(lownib | 0b00000100);
+"152
+[e ( _lcd_cmd (1 -> | -> _lownib `i -> 4 `i `uc ]
+[; ;lcd_lib.c: 153: lcd_cmd(lownib & ~0b00000100);
+"153
+[e ( _lcd_cmd (1 -> & -> _lownib `i ~ -> 4 `i `uc ]
+[; ;lcd_lib.c: 154: }
+"154
 [e :UE 365 ]
 }
 [a 1C 32 0 ]

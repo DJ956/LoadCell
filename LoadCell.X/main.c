@@ -3,7 +3,8 @@
 #include "lcd_lib.h"
 #include <stdio.h>
 
-char str[16];
+char gramstr[16];
+char valstr[16];
 
 void main(void)
 {    
@@ -32,25 +33,41 @@ void main(void)
     lcd_set_cursor(0, 0);
     
     
-    lcd_print("Initialize");   
+    lcd_print("Initialize"); 
+    lcd_set_cursor(0, 1);
+    lcd_print("Load cell Unit");
    
     __delay_ms(1000);
     
-    weight_zero = get_scale_val(50);
+    weight_zero = get_scale_val(3);
     
-    __delay_ms(3000);
+    lcd_clear();
+    lcd_set_cursor(0,0);
+    sprintf(valstr, "%lu val ", weight_zero);
+    lcd_print(valstr);
+    __delay_ms(500);
+    
+    lcd_clear();
+    lcd_set_cursor(0,0);
+    sprintf(valstr, "Divide val: %d", DIVIDE_VAL);
+    lcd_print(valstr);
+    __delay_ms(1500);
     
     while (1)
     {
-        weight_dat = get_scale_val(8);
+        weight_dat = get_scale_val(1);
         float weight_gram = scale_convert_gram(weight_dat);
         
-        sprintf(str, "%3.2f g", weight_gram);
+        sprintf(valstr, "%lu val", weight_dat);
+        
+        sprintf(gramstr, "%3.2f gram", weight_gram);
         
         lcd_clear();
         lcd_set_cursor(0, 0);
-        lcd_print(str);
+        lcd_print(valstr);
+        lcd_set_cursor(0, 1);
+        lcd_print(gramstr);
         
-        __delay_ms(100);
+        __delay_ms(1000);
     }
 }

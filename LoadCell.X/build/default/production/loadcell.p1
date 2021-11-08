@@ -3046,13 +3046,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 289: typedef int16_t intptr_t;
 [; ;stdint.h: 294: typedef uint16_t uintptr_t;
 "12 loadcell.h
-[v _weight_dat `l ~T0 @X0 1 e ]
-[; ;loadcell.h: 12: signed long weight_dat;
+[v _weight_dat `ul ~T0 @X0 1 e ]
+[; ;loadcell.h: 12: unsigned long weight_dat;
 "13
-[v _weight_zero `l ~T0 @X0 1 e ]
-[; ;loadcell.h: 13: signed long weight_zero;
-[; ;loadcell.h: 20: long get_scale_val(uint8_t n);
-[; ;loadcell.h: 27: float scale_convert_gram(signed long count);
+[v _weight_zero `ul ~T0 @X0 1 e ]
+[; ;loadcell.h: 13: unsigned long weight_zero;
+[; ;loadcell.h: 20: unsigned long get_scale_val(int n);
+[; ;loadcell.h: 27: float scale_convert_gram(unsigned long count);
 [; ;pin_manager.h: 78: void PIN_MANAGER_Initialize (void);
 [; ;pin_manager.h: 90: void PIN_MANAGER_IOC(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
@@ -3087,16 +3087,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 350 ]
 }
 "15
-[v _get_CELL_DAT_VAL `(uc ~T0 @X0 1 ef ]
+[v _get_CELL_DAT_VAL `(i ~T0 @X0 1 ef ]
 {
-[; ;loadcell.c: 15: uint8_t get_CELL_DAT_VAL(){
+[; ;loadcell.c: 15: int get_CELL_DAT_VAL(){
 [e :U _get_CELL_DAT_VAL ]
 [f ]
 [; ;loadcell.c: 16: if(0x02 == 0x01){ return PORTAbits.RA0; }
 "16
 [e $ ! == -> 2 `i -> 1 `i 352  ]
 {
-[e ) . . _PORTAbits 0 0 ]
+[e ) -> . . _PORTAbits 0 0 `i ]
 [e $UE 351  ]
 }
 [e :U 352 ]
@@ -3104,7 +3104,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "17
 [e $ ! == -> 2 `i -> 2 `i 353  ]
 {
-[e ) . . _PORTAbits 0 1 ]
+[e ) -> . . _PORTAbits 0 1 `i ]
 [e $UE 351  ]
 }
 [e :U 353 ]
@@ -3112,7 +3112,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18
 [e $ ! == -> 2 `i -> 4 `i 354  ]
 {
-[e ) . . _PORTAbits 0 2 ]
+[e ) -> . . _PORTAbits 0 2 `i ]
 [e $UE 351  ]
 }
 [e :U 354 ]
@@ -3120,7 +3120,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "19
 [e $ ! == -> 2 `i -> 8 `i 355  ]
 {
-[e ) . . _PORTAbits 0 3 ]
+[e ) -> . . _PORTAbits 0 3 `i ]
 [e $UE 351  ]
 }
 [e :U 355 ]
@@ -3128,7 +3128,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "20
 [e $ ! == -> 2 `i -> 16 `i 356  ]
 {
-[e ) . . _PORTAbits 0 4 ]
+[e ) -> . . _PORTAbits 0 4 `i ]
 [e $UE 351  ]
 }
 [e :U 356 ]
@@ -3136,7 +3136,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "21
 [e $ ! == -> 2 `i -> 32 `i 357  ]
 {
-[e ) . . _PORTAbits 0 5 ]
+[e ) -> . . _PORTAbits 0 5 `i ]
 [e $UE 351  ]
 }
 [e :U 357 ]
@@ -3144,7 +3144,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "22
 [e $ ! == -> 2 `i -> 64 `i 358  ]
 {
-[e ) . . _PORTAbits 0 6 ]
+[e ) -> . . _PORTAbits 0 6 `i ]
 [e $UE 351  ]
 }
 [e :U 358 ]
@@ -3152,40 +3152,40 @@ Version 3.2 HI-TECH Software Intermediate Code
 "23
 [e $ ! == -> 2 `i -> 128 `i 359  ]
 {
-[e ) . . _PORTAbits 0 7 ]
+[e ) -> . . _PORTAbits 0 7 `i ]
 [e $UE 351  ]
 }
 [e :U 359 ]
 [; ;loadcell.c: 25: return 0;
 "25
-[e ) -> -> 0 `i `uc ]
+[e ) -> 0 `i ]
 [e $UE 351  ]
 [; ;loadcell.c: 26: }
 "26
 [e :UE 351 ]
 }
 "28
-[v _get_scale_val `(l ~T0 @X0 1 ef1`uc ]
+[v _get_scale_val `(ul ~T0 @X0 1 ef1`i ]
 "29
 {
-[; ;loadcell.c: 28: long get_scale_val(uint8_t n)
+[; ;loadcell.c: 28: unsigned long get_scale_val(int n)
 [; ;loadcell.c: 29: {
 [e :U _get_scale_val ]
 "28
-[v _n `uc ~T0 @X0 1 r1 ]
+[v _n `i ~T0 @X0 1 r1 ]
 "29
 [f ]
 [; ;loadcell.c: 30: set_CELL_CLK_LOW();
 "30
 [e ( _set_CELL_CLK_LOW ..  ]
 "32
-[v _weight_count `l ~T0 @X0 1 a ]
-[; ;loadcell.c: 32: long weight_count = 0;
-[e = _weight_count -> -> 0 `i `l ]
+[v _weight_count `ul ~T0 @X0 1 a ]
+[; ;loadcell.c: 32: unsigned long weight_count = 0;
+[e = _weight_count -> -> -> 0 `i `l `ul ]
 "33
-[v _weight_add `l ~T0 @X0 1 a ]
-[; ;loadcell.c: 33: long weight_add = 0;
-[e = _weight_add -> -> 0 `i `l ]
+[v _weight_add `ul ~T0 @X0 1 a ]
+[; ;loadcell.c: 33: unsigned long weight_add = 0;
+[e = _weight_add -> -> -> 0 `i `l `ul ]
 [; ;loadcell.c: 34: for (uint8_t j = 0; j < n; j++)
 "34
 {
@@ -3201,14 +3201,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 365  ]
 [e :U 366 ]
 [e :U 365 ]
-[e $ == -> ( _get_CELL_DAT_VAL ..  `i -> 0 `i 366  ]
+[e $ == ( _get_CELL_DAT_VAL ..  -> 0 `i 366  ]
 [e :U 367 ]
 [; ;loadcell.c: 37: while (get_CELL_DAT_VAL() == 1);
 "37
 [e $U 368  ]
 [e :U 369 ]
 [e :U 368 ]
-[e $ == -> ( _get_CELL_DAT_VAL ..  `i -> 1 `i 369  ]
+[e $ == ( _get_CELL_DAT_VAL ..  -> 1 `i 369  ]
 [e :U 370 ]
 [; ;loadcell.c: 38: _delay((unsigned long)((10)*(8000000/4000000.0)));
 "38
@@ -3238,7 +3238,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _set_CELL_CLK_LOW ..  ]
 [; ;loadcell.c: 46: weight_count += get_CELL_DAT_VAL();
 "46
-[e =+ _weight_count -> ( _get_CELL_DAT_VAL ..  `l ]
+[e =+ _weight_count -> -> ( _get_CELL_DAT_VAL ..  `l `ul ]
 [; ;loadcell.c: 47: _delay((unsigned long)((10)*(8000000/4000000.0)));
 "47
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
@@ -3279,57 +3279,60 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 375 ]
 "55
 }
-[; ;loadcell.c: 55: }
-[; ;loadcell.c: 57: weight_add += weight_count;
-"57
+[; ;loadcell.c: 55: };
+[; ;loadcell.c: 56: weight_add += weight_count;
+"56
 [e =+ _weight_add _weight_count ]
-[; ;loadcell.c: 58: weight_count = 0;
+[; ;loadcell.c: 57: weight_count = 0;
+"57
+[e = _weight_count -> -> -> 0 `i `l `ul ]
 "58
-[e = _weight_count -> -> 0 `i `l ]
-"59
 }
 "34
 [e ++ _j -> -> 1 `i `uc ]
 [e :U 364 ]
-[e $ < -> _j `i -> _n `i 361  ]
+[e $ < -> _j `i _n 361  ]
 [e :U 362 ]
-"59
+"58
 }
-[; ;loadcell.c: 59: }
-[; ;loadcell.c: 60: weight_count = weight_add / n;
-"60
-[e = _weight_count / _weight_add -> _n `l ]
-[; ;loadcell.c: 61: return weight_count;
-"61
+[; ;loadcell.c: 58: }
+[; ;loadcell.c: 59: weight_count = weight_add / n;
+"59
+[e = _weight_count / _weight_add -> -> _n `l `ul ]
+[; ;loadcell.c: 62: weight_count = weight_count ^ 0x800000;
+"62
+[e = _weight_count ^ _weight_count -> -> 8388608 `l `ul ]
+[; ;loadcell.c: 63: return weight_count;
+"63
 [e ) _weight_count ]
 [e $UE 360  ]
-[; ;loadcell.c: 62: }
-"62
+[; ;loadcell.c: 64: }
+"64
 [e :UE 360 ]
 }
-"64
-[v _scale_convert_gram `(f ~T0 @X0 1 ef1`l ]
-"65
-{
-[; ;loadcell.c: 64: float scale_convert_gram(signed long count)
-[; ;loadcell.c: 65: {
-[e :U _scale_convert_gram ]
-"64
-[v _count `l ~T0 @X0 1 r1 ]
-"65
-[f ]
 "66
-[v _temp `f ~T0 @X0 1 a ]
-[; ;loadcell.c: 66: float temp = count - weight_zero;
-[e = _temp -> - _count _weight_zero `f ]
-[; ;loadcell.c: 67: temp = temp / 486;
+[v _scale_convert_gram `(f ~T0 @X0 1 ef1`ul ]
 "67
-[e = _temp / _temp -> -> 486 `i `f ]
-[; ;loadcell.c: 68: return temp;
+{
+[; ;loadcell.c: 66: float scale_convert_gram(unsigned long count)
+[; ;loadcell.c: 67: {
+[e :U _scale_convert_gram ]
+"66
+[v _count `ul ~T0 @X0 1 r1 ]
+"67
+[f ]
 "68
+[v _temp `f ~T0 @X0 1 a ]
+[; ;loadcell.c: 68: float temp = count - weight_zero;
+[e = _temp -> - _count _weight_zero `f ]
+[; ;loadcell.c: 69: temp = temp / 493;
+"69
+[e = _temp / _temp -> -> 493 `i `f ]
+[; ;loadcell.c: 70: return temp;
+"70
 [e ) _temp ]
 [e $UE 377  ]
-[; ;loadcell.c: 69: }
-"69
+[; ;loadcell.c: 71: }
+"71
 [e :UE 377 ]
 }

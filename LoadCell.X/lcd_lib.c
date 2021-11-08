@@ -117,6 +117,11 @@ void lcd_clear(){
     }
 }
 
+/**
+ * 
+ * @param col col
+ * @param row row
+ */
 void lcd_set_cursor(uint8_t col, uint8_t row){
     uint8_t row_offsets[] = {0x00, 0x40, 0x14, 0x54};
     if(row > ROW){
