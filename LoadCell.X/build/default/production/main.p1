@@ -3195,79 +3195,70 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 44: lcd_clear();
 "44
 [e ( _lcd_clear ..  ]
-[; ;main.c: 45: lcd_set_cursor(0,0);
+[; ;main.c: 45: sprintf(valstr, "%lu val ", weight_zero);
 "45
-[e ( _lcd_set_cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 46: sprintf(valstr, "%lu val ", weight_zero);
-"46
 [e ( _sprintf (1 , (. , &U _valstr :s 3C _weight_zero ]
-[; ;main.c: 47: lcd_print(valstr);
+[; ;main.c: 46: lcd_print(valstr);
+"46
+[e ( _lcd_print (1 &U _valstr ]
+[; ;main.c: 47: _delay((unsigned long)((500)*(8000000/4000.0)));
 "47
-[e ( _lcd_print (1 &U _valstr ]
-[; ;main.c: 48: _delay((unsigned long)((500)*(8000000/4000.0)));
-"48
 [e ( __delay (1 -> * -> -> 500 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-[; ;main.c: 50: lcd_clear();
+[; ;main.c: 49: lcd_clear();
+"49
+[e ( _lcd_clear ..  ]
+[; ;main.c: 50: sprintf(valstr, "Divide val: %d", 493);
 "50
-[e ( _lcd_clear ..  ]
-[; ;main.c: 51: lcd_set_cursor(0,0);
-"51
-[e ( _lcd_set_cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 52: sprintf(valstr, "Divide val: %d", 493);
-"52
 [e ( _sprintf (1 , (. , &U _valstr :s 4C -> 493 `i ]
-[; ;main.c: 53: lcd_print(valstr);
-"53
+[; ;main.c: 51: lcd_print(valstr);
+"51
 [e ( _lcd_print (1 &U _valstr ]
-[; ;main.c: 54: _delay((unsigned long)((1500)*(8000000/4000.0)));
-"54
+[; ;main.c: 52: _delay((unsigned long)((1500)*(8000000/4000.0)));
+"52
 [e ( __delay (1 -> * -> -> 1500 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-[; ;main.c: 56: while (1)
-"56
+[; ;main.c: 54: while (1)
+"54
 [e :U 352 ]
-[; ;main.c: 57: {
-"57
+[; ;main.c: 55: {
+"55
 {
-[; ;main.c: 58: weight_dat = get_scale_val(1);
-"58
-[e = _weight_dat ( _get_scale_val (1 -> 1 `i ]
-"59
+[; ;main.c: 56: weight_dat = get_scale_val(8);
+"56
+[e = _weight_dat ( _get_scale_val (1 -> 8 `i ]
+"57
 [v _weight_gram `f ~T0 @X0 1 a ]
-[; ;main.c: 59: float weight_gram = scale_convert_gram(weight_dat);
+[; ;main.c: 57: float weight_gram = scale_convert_gram(weight_dat);
 [e = _weight_gram ( _scale_convert_gram (1 _weight_dat ]
-[; ;main.c: 61: sprintf(valstr, "%lu val", weight_dat);
-"61
+[; ;main.c: 59: sprintf(valstr, "%lu val", weight_dat);
+"59
 [e ( _sprintf (1 , (. , &U _valstr :s 5C _weight_dat ]
-[; ;main.c: 63: sprintf(gramstr, "%3.2f gram", weight_gram);
-"63
+[; ;main.c: 61: sprintf(gramstr, "%3.2f gram", weight_gram);
+"61
 [e ( _sprintf (1 , (. , &U _gramstr :s 6C -> _weight_gram `d ]
-[; ;main.c: 65: lcd_clear();
-"65
+[; ;main.c: 63: lcd_clear();
+"63
 [e ( _lcd_clear ..  ]
-[; ;main.c: 66: lcd_set_cursor(0, 0);
-"66
-[e ( _lcd_set_cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;main.c: 67: lcd_print(valstr);
-"67
+[; ;main.c: 64: lcd_print(valstr);
+"64
 [e ( _lcd_print (1 &U _valstr ]
-[; ;main.c: 68: lcd_set_cursor(0, 1);
-"68
+[; ;main.c: 65: lcd_set_cursor(0, 1);
+"65
 [e ( _lcd_set_cursor (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
-[; ;main.c: 69: lcd_print(gramstr);
-"69
+[; ;main.c: 66: lcd_print(gramstr);
+"66
 [e ( _lcd_print (1 &U _gramstr ]
-[; ;main.c: 71: _delay((unsigned long)((1000)*(8000000/4000.0)));
-"71
+[; ;main.c: 68: _delay((unsigned long)((1000)*(8000000/4000.0)));
+"68
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"72
+"69
 }
 [e :U 351 ]
-"56
+"54
 [e $U 352  ]
 [e :U 353 ]
-[; ;main.c: 72: }
-[; ;main.c: 73: }
-"73
+[; ;main.c: 69: }
+[; ;main.c: 70: }
+"70
 [e :UE 350 ]
 }
 [p f _sprintf 8496272 ]

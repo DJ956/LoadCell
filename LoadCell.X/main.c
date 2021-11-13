@@ -42,20 +42,18 @@ void main(void)
     weight_zero = get_scale_val(3);
     
     lcd_clear();
-    lcd_set_cursor(0,0);
     sprintf(valstr, "%lu val ", weight_zero);
     lcd_print(valstr);
     __delay_ms(500);
     
     lcd_clear();
-    lcd_set_cursor(0,0);
     sprintf(valstr, "Divide val: %d", DIVIDE_VAL);
     lcd_print(valstr);
     __delay_ms(1500);
     
     while (1)
-    {
-        weight_dat = get_scale_val(1);
+    { 
+        weight_dat = get_scale_val(8);
         float weight_gram = scale_convert_gram(weight_dat);
         
         sprintf(valstr, "%lu val", weight_dat);
@@ -63,7 +61,6 @@ void main(void)
         sprintf(gramstr, "%3.2f gram", weight_gram);
         
         lcd_clear();
-        lcd_set_cursor(0, 0);
         lcd_print(valstr);
         lcd_set_cursor(0, 1);
         lcd_print(gramstr);

@@ -115,6 +115,8 @@ void lcd_clear(){
             lcd_print(" ");
         }
     }
+    
+    lcd_set_cursor(0, 0);
 }
 
 /**

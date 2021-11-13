@@ -69,11 +69,11 @@
 [v _lcd_backlight lcd_backlight `(v  1 e 1 0 ]
 "111
 [v _lcd_clear lcd_clear `(v  1 e 1 0 ]
-"125
+"127
 [v _lcd_set_cursor lcd_set_cursor `(v  1 e 1 0 ]
-"134
+"136
 [v _lcd_print lcd_print `(v  1 e 1 0 ]
-"141
+"143
 [v _command command `(v  1 e 1 0 ]
 "7 C:\Users\dexte\Documents\GitHub\LoadCell\LoadCell.X\loadcell.c
 [v _set_CELL_CLK_LOW set_CELL_CLK_LOW `(v  1 e 1 0 ]
@@ -211,9 +211,9 @@
 "9
 [v _main main `(v  1 e 1 0 ]
 {
-"59
+"57
 [v main@weight_gram weight_gram `f  1 a 4 40 ]
-"73
+"70
 } 0
 "505 C:\Program Files\Microchip\xc8\v2.32\pic\sources\c90\common\doprnt.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
@@ -509,45 +509,45 @@
 [v lcd_clear@col col `uc  1 a 1 7 ]
 "112
 [v lcd_clear@row row `uc  1 a 1 6 ]
-"118
+"120
 } 0
-"125
+"127
 [v _lcd_set_cursor lcd_set_cursor `(v  1 e 1 0 ]
 {
 [v lcd_set_cursor@col col `uc  1 a 1 wreg ]
-"126
+"128
 [v lcd_set_cursor@row_offsets row_offsets `[4]uc  1 a 4 0 ]
-"130
+"132
 [v lcd_set_cursor@cmd cmd `uc  1 a 1 5 ]
-"125
+"127
 [v lcd_set_cursor@col col `uc  1 a 1 wreg ]
 [v lcd_set_cursor@row row `uc  1 p 1 8 ]
 [v lcd_set_cursor@F2624 F2624 `[4]uc  1 s 4 F2624 ]
 [v lcd_set_cursor@col col `uc  1 a 1 4 ]
-"132
-} 0
 "134
+} 0
+"136
 [v _lcd_print lcd_print `(v  1 e 1 0 ]
 {
-"136
+"138
 [v lcd_print@cmd cmd `uc  1 a 1 11 ]
-"134
+"136
 [v lcd_print@str str `*.26uc  1 p 2 8 ]
-"139
-} 0
 "141
+} 0
+"143
 [v _command command `(v  1 e 1 0 ]
 {
 [v command@val val `uc  1 a 1 wreg ]
-"143
+"145
 [v command@lownib lownib `uc  1 a 1 7 ]
-"142
+"144
 [v command@highnib highnib `uc  1 a 1 6 ]
-"141
+"143
 [v command@val val `uc  1 a 1 wreg ]
 [v command@mode mode `uc  1 p 1 2 ]
 [v command@val val `uc  1 a 1 5 ]
-"154
+"156
 } 0
 "105
 [v _lcd_backlight lcd_backlight `(v  1 e 1 0 ]
